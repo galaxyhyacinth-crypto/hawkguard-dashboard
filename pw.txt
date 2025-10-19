@@ -1,3 +1,5 @@
 site key hss - 6Lf1tewrAAAAAHkaUprzvRGrzMT0XXG9BAWjaNKr
 secret key hss - 6Lf1tewrAAAAAGjBvANCfKxfgZ21Pe9V8U_RiUHV
 app pw  hss - odop chit iujp asun
+
+app pw baru hss - gwrd dima clao ruyh

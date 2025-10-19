@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("registerForm");
 
+  const BASE_URL = "https://hawkguardsystem.com"; // ✅ live domain
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch(`${BASE_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ full_name, email, password, recaptchaToken }),

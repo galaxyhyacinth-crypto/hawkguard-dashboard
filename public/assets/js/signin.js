@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('signin-form');
   const toggle = document.getElementById('toggle-signin-password');
 
+  const BASE_URL = "https://hawkguardsystem.com"; // ✅ live domain
+
   if (toggle) {
     toggle.addEventListener('click', () => {
       const pwd = document.getElementById('signin-password');
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = document.getElementById('signin-email').value.trim();
     const password = document.getElementById('signin-password').value.trim();
     try {
-      const res = await fetch('/api/signin', {
+      const res = await fetch(`${BASE_URL}/api/signin`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ email, password })

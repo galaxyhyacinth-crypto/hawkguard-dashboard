@@ -1,25 +1,26 @@
-import fetch from "node-fetch";
-
+// api/verify-recaptcha.js
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
-  const { token } = req.body;
-  if (!token) return res.status(400).json({ error: "Missing token" });
-
   try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ error: "Missing token" });
+
     const secret = process.env.RECAPTCHA_SECRET_KEY;
     if (!secret) return res.status(400).json({ error: "reCAPTCHA secret not configured" });
 
-    const resp = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`
-    });
-    const data = await resp.json();
-    if (!data.success) return res.status(400).json({ ok: false, data });
+    const params = new URLSearchParams();
+    params.append("secret", secret);
+    params.append("response", token);
 
-    return res.json({ ok: true, data });
+    const r = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      body: params
+    });
+    const j = await r.json();
+    if (!j.success) return res.status(400).json({ ok: false, data: j });
+    return res.json({ ok: true, data: j });
   } catch (err) {
-    console.error("reCAPTCHA verify error", err);
-    return res.status(500).json({ error: "Failed to verify reCAPTCHA" });
+    console.error("verify-recaptcha error", err);
+    return res.status(500).json({ error: "Server error" });
   }
 }

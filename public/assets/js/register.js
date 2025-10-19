@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const pwd = document.getElementById('password');
   const pwd2 = document.getElementById('password2');
 
+   const BASE_URL = "https://hawkguardsystem.com"; // ✅ live domain
+
   // toggle eyes
   ['toggle-password','toggle-password2'].forEach(id => {
     const btn = document.getElementById(id);
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.grecaptcha) recaptchaToken = grecaptcha.getResponse();
 
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch(`${BASE_URL}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ full_name, email, password, recaptchaToken })

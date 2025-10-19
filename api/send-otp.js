@@ -1,55 +1,67 @@
+// api/send-otp.js
 import nodemailer from "nodemailer";
-import { saveOtp } from "./otp-store.js";
+import { saveOtp } from "./otp_store.js";
 
-export function generateOtp6() {
+const OTP_EXPIRY_SECONDS = Number(process.env.OTP_EXPIRY_SECONDS || 180);
+
+function generate6() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-export async function sendOtpEmail(toEmail, otp) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_PORT) || 465,
+function createTransporter() {
+  // Use Gmail SMTP (App Password recommended)
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    throw new Error("SMTP_USER / SMTP_PASS not configured");
+  }
+  return nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
     secure: true,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    tls: { rejectUnauthorized: false }
   });
+}
 
+export async function sendOtpAndStore(email) {
+  const otp = generate6();
+  const ttlMs = OTP_EXPIRY_SECONDS * 1000;
+  saveOtp(email, otp, ttlMs);
+
+  const transporter = createTransporter();
   const html = `
-    <div style="font-family:Arial;padding:20px">
-      <h2>HawkGuard Verification Code</h2>
-      <p>Your 6-digit OTP is:</p>
+    <div style="font-family:Arial;padding:18px">
+      <h3>HawkGuard Surveillance System — Verification Code</h3>
+      <p>Your 6-digit verification code is:</p>
       <h1 style="letter-spacing:6px;color:#0b6cff">${otp}</h1>
-      <p>This code will expire in ${process.env.OTP_EXPIRY_SECONDS || 180} seconds.</p>
+      <p>This code expires in ${OTP_EXPIRY_SECONDS} seconds.</p>
+      <p>If you did not request this, ignore this email.</p>
     </div>
   `;
 
   await transporter.sendMail({
     from: `"HAWKGUARD SURVEILLANCE SYSTEM" <${process.env.SMTP_USER}>`,
-    to: toEmail,
+    to: email,
     subject: "Your HawkGuard 6-digit OTP",
     html
   });
+
+  return { otp, expires_in: OTP_EXPIRY_SECONDS };
 }
 
-export async function sendOtpAndStore(email, userId = null, fullName = "") {
-  const otp = generateOtp6();
-  const expirySeconds = Number(process.env.OTP_EXPIRY_SECONDS) || 180;
-  saveOtp(email, otp, expirySeconds * 1000);
-  await sendOtpEmail(email, otp);
-}
-
-// A minimal handler (not strictly necessary if signin.js calls sendOtpAndStore)
+/**
+ * Minimal handler if you want a direct /api/send-otp POST endpoint
+ * Expect body: { email }
+ */
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: "Missing email" });
     await sendOtpAndStore(email);
-    res.json({ ok: true });
+    return res.json({ ok: true });
   } catch (err) {
     console.error("send-otp error", err);
-    res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 }

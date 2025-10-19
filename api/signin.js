@@ -1,3 +1,4 @@
+// api/signin.js
 import bcrypt from "bcryptjs";
 import { supabaseServer } from "./_supabase.js";
 import { sendOtpAndStore } from "./send-otp.js";
@@ -16,8 +17,12 @@ export default async function handler(req, res) {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ error: "Invalid credentials" });
 
-    // Send OTP
-    await sendOtpAndStore(email, user.id, user.full_name);
+    try {
+      await sendOtpAndStore(email);
+    } catch (mailErr) {
+      console.error("send otp failed:", mailErr);
+      return res.status(500).json({ error: "Failed to send OTP email" });
+    }
 
     return res.json({ ok: true, message: "OTP sent" });
   } catch (err) {

@@ -1,20 +1,34 @@
-// Temporary in-memory OTP storage
-// (You can replace this later with Supabase or Redis if needed)
-const otpStore = new Map();
+// api/otp_store.js
+const otpMap = new Map();
 
-export function saveOTP(email, otp) {
-  otpStore.set(email, { otp, timestamp: Date.now() });
+/**
+ * Save OTP for email with expiry (ms)
+ */
+export function saveOtp(email, otp, ttlMs = 180000) {
+  const expiresAt = Date.now() + ttlMs;
+  otpMap.set(email, { otp, expiresAt });
+  // cleanup after expiry
+  setTimeout(() => otpMap.delete(email), ttlMs + 5000);
 }
 
-export function verifyOTP(email, otp) {
-  const record = otpStore.get(email);
-  if (!record) return false;
-  const expired = Date.now() - record.timestamp > 3 * 60 * 1000; // 3 minutes
-  if (expired) {
-    otpStore.delete(email);
+/**
+ * Verify OTP
+ */
+export function verifyOtp(email, otpInput) {
+  const rec = otpMap.get(email);
+  if (!rec) return false;
+  if (Date.now() > rec.expiresAt) {
+    otpMap.delete(email);
     return false;
   }
-  const match = record.otp === otp;
-  if (match) otpStore.delete(email);
-  return match;
+  const ok = String(rec.otp) === String(otpInput);
+  if (ok) otpMap.delete(email);
+  return ok;
+}
+
+/**
+ * Delete OTP (explicit)
+ */
+export function deleteOtp(email) {
+  otpMap.delete(email);
 }

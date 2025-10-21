@@ -1,6 +1,9 @@
-export default function handler(req, res) {
-  res.json({
-    url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_KEY ? "✅ Exists" : "❌ Missing"
+export default async function handler(req, res) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_KEY;
+
+  res.status(200).json({
+    SUPABASE_URL: supabaseUrl || null,
+    SUPABASE_KEY_EXISTS: !!supabaseKey
   });
 }

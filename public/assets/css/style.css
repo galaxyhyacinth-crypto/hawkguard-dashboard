@@ -317,21 +317,46 @@ body {
 }
 
 /* -------------------- BUTTONS -------------------- */
-.btn {
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-.btn.outline {
+/* === NAVBAR BUTTONS (with neon glow hover) === */
+.btn-signin, .btn-signup {
+  border: 1px solid white;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: #fff;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
+
+.btn-signin:hover, .btn-signup:hover {
+  background: #00b3ff;
+  color: #fff;
+  border-color: #00b3ff;
+  box-shadow: 0 0 10px #00b3ff, 0 0 20px #00b3ff, 0 0 40px #00b3ff;
+  transform: translateY(-2px);
+}
+
+/* Optional smooth light pulse animation */
+.btn-signin:hover::after, .btn-signup:hover::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,179,255,0.25) 0%, transparent 70%);
+  animation: pulseGlow 1.5s infinite ease-in-out;
+  z-index: 0;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+}
+
 .btn.small {
   padding: 6px 10px;
 }

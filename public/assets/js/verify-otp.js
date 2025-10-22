@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('verify-otp-btn');
   const msg = document.getElementById('otp-msg');
   const countdown = document.getElementById('countdown');
+  const BASE_URL = ""; // ✅ empty string → relative path (auto uses same origin)
+
 
   // auto-advance, numeric only, paste handling
   inputs.forEach((input, idx) => {
@@ -47,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!email) { alert('Please sign in again'); window.location.href='/sign-in.html'; return; }
 
     try {
-      const res = await fetch('/api/verify-otp', {
+      const res = await fetch("/api/verify-otp", {
         method:'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email, otp })
       });
       const j = await res.json();

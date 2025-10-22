@@ -7,6 +7,8 @@ export default function SignInPage() {
   const [sent, setSent] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const BASE_URL = ""; // ✅ empty string → automatically uses same origin
+
 
   const sendOtp = async () => {
     if (!email) return setMessage("Please enter your email.");

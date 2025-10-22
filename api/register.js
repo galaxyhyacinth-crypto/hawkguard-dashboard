@@ -1,6 +1,6 @@
 // api/register.js
 import bcrypt from "bcryptjs";
-import { supabaseServer } from "./_supabase.js";
+import { supabase } from "./_supabase.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
     const hash = await bcrypt.hash(password, 10);
 
-    const { error } = await supabaseServer.from("users").insert([{ full_name, email, password: hash }]);
+    const { error } = await supabase.from("users").insert([{ full_name, email, password: hash }]);
     if (error) {
       // nicer message for duplicate email
       const msg = (error.message || "").toLowerCase();

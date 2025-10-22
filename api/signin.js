@@ -1,6 +1,6 @@
 // api/signin.js
 import bcrypt from "bcryptjs";
-import { supabaseServer } from "./_supabase.js";
+import { supabase } from "./_supabase.js";
 import { sendOtpAndStore } from "./send-otp.js";
 
 export default async function handler(req, res) {
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({ error: "Missing fields" });
 
-    const { data: users, error } = await supabaseServer.from("users").select("*").eq("email", email).limit(1);
+    const { data: users, error } = await supabase.from("users").select("*").eq("email", email).limit(1);
     if (error) return res.status(500).json({ error: error.message });
     if (!users || users.length === 0) return res.status(401).json({ error: "Invalid credentials" });
 

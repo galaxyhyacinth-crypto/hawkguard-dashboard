@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const logoutBtn = document.getElementById('logout-btn');
   const fullnameEl = document.getElementById('user-fullname');
 
+  const BASE_URL = ""; // ✅ empty string → automatically uses same origin
+
+
   // --- Logout button ---
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {

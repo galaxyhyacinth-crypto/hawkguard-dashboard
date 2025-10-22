@@ -1,34 +1,30 @@
 // api/otp_store.js
-const otpMap = new Map();
+import { supabase } from "./_supabase.js";
 
-/**
- * Save OTP for email with expiry (ms)
- */
-export function saveOtp(email, otp, ttlMs = 180000) {
-  const expiresAt = Date.now() + ttlMs;
-  otpMap.set(email, { otp, expiresAt });
-  // cleanup after expiry
-  setTimeout(() => otpMap.delete(email), ttlMs + 5000);
+export async function saveOtp(email, otp, ttlMs) {
+  const expires_at = new Date(Date.now() + ttlMs).toISOString();
+
+  await supabase
+    .from("otp_store")
+    .upsert({ email, otp, expires_at }); // upsert = insert or update if exists
 }
 
-/**
- * Verify OTP
- */
-export function verifyOtp(email, otpInput) {
-  const rec = otpMap.get(email);
-  if (!rec) return false;
-  if (Date.now() > rec.expiresAt) {
-    otpMap.delete(email);
-    return false;
-  }
-  const ok = String(rec.otp) === String(otpInput);
-  if (ok) otpMap.delete(email);
-  return ok;
+export async function verifyOtp(email, otp) {
+  const { data, error } = await supabase
+    .from("otp_store")
+    .select("otp, expires_at")
+    .eq("email", email)
+    .single();
+
+  if (error || !data) return false;
+
+  const now = new Date();
+  const expiry = new Date(data.expires_at);
+  if (data.otp !== otp || now > expiry) return false;
+
+  return true;
 }
 
-/**
- * Delete OTP (explicit)
- */
-export function deleteOtp(email) {
-  otpMap.delete(email);
+export async function deleteOtp(email) {
+  await supabase.from("otp_store").delete().eq("email", email);
 }

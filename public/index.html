@@ -1,42 +1,47 @@
-<body>
-  <header class="navbar">
-    <div class="logo">🦅 HAWKGUARD</div>
+<body class="home-hero-page">
+  <!-- 🔹 Top navigation bar -->
+  <header class="top-nav">
+    <div class="brand">🦅 HAWKGUARD</div>
     <nav>
-      <a href="#features">Features</a>
-      <a href="#howitworks">How It Works</a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#contact">Contact</a>
-      <button class="btn-signin">Sign In</button>
-      <button class="btn-signup">Sign Up</button>
+      <a href="#features" class="btn-nav">Features</a>
+      <a href="#howitworks" class="btn-nav">How It Works</a>
+      <a href="#dashboard" class="btn-nav">Dashboard</a>
+      <a href="#contact" class="btn-nav">Contact</a>
+      <a href="signin.html" class="btn-nav">Sign In</a>
+      <a href="signup.html" class="btn-nav">Sign Up</a>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Smart License Plate Detection.<br>Real-Time Alerts. Total Security.</h1>
-    <p>Automated surveillance and monitoring with instant alerts.</p>
-    <button class="btn-primary">Get Started</button>
-  </section>
-
-  <section class="about-section">
-    <h2>About HawkGuard</h2>
-    <p>
-      HawkGuard automatically captures, detects, and logs vehicle license plates in real time.
-      Easily monitor registered and unregistered entries from one secure dashboard.
+  <!-- 🔹 Hero section -->
+  <div class="hero-inner fade-in-box">
+    <h1 class="hero-title">
+      Smart License Plate Detection.<br>Real-Time Alerts. Total Security.
+    </h1>
+    <p style="font-size:18px; margin-bottom: 24px;">
+      Automated surveillance and monitoring with instant alerts.
     </p>
-  </section>
+    <button class="btn-nav" style="font-size:16px;">Get Started</button>
 
-  <section id="howitworks" class="how-section">
-    <h2>How It Works</h2>
-    <ul>
-      <li><span>1</span> Camera detects and captures plate</li>
-      <li><span>2</span> Data is matched and logged</li>
-      <li><span>3</span> Alerts are sent to admin</li>
-      <li><span>4</span> Dashboard updates in real time</li>
-    </ul>
-  </section>
+    <!-- 🔹 White About Box -->
+    <div class="about-box fade-in-box">
+      <h2>About HawkGuard</h2>
+      <p>
+        HawkGuard Surveillance System captures license plate detections from cameras,
+        stores records (entries/exits), and shows real-time registered/unregistered plate events.
+      </p>
+
+      <h3>How It Works (Summary)</h3>
+      <ul>
+        <li>Camera captures plate image and posts into Supabase (ENTRIES / UNREGISTERED LOGS).</li>
+        <li>Registered plates are matched to the users table; unregistered plates are logged as alerts.</li>
+        <li>Admin logs in using email + password; backend sends a 6-digit OTP to their email for verification.</li>
+        <li>Dashboard updates in real-time when new entries or unregistered logs are inserted (no refresh needed).</li>
+      </ul>
+    </div>
+  </div>
 
   <footer>
-    <p>Contact: hawkguard.team@gmail.com</p>
+    <p>Contact: hawkguardsurveillancesystem@gmail.com</p>
     <p>© 2025 HawkGuard Group</p>
   </footer>
 </body>

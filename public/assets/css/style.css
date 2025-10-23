@@ -43,7 +43,7 @@ body {
 /* -------------------- HOMEPAGE (CAR BACKGROUND) -------------------- */
 /* -------------------- HOMEPAGE (CAR BACKGROUND + CENTERED CONTENT) -------------------- */
 .home-hero-page {
-  background: url('/assets/images/home-hero.jpg') no-repeat center center fixed;
+  background: url('images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
   display: flex;
@@ -424,4 +424,78 @@ footer {
 .password-hints {
   text-align: left;
   margin-top: 10px;
+}
+
+/* ✅ HERO PAGE FIXES */
+.home-hero-page {
+  background: url('images/home-hero.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  height: 100vh;
+  color: white;
+  overflow: hidden;
+}
+
+/* ✅ Ensure overlay is visible */
+.home-hero-page::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* ✅ Inner content on top of overlay */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
+}
+
+/* ✅ White About Box in the Center */
+.about-box {
+  background: #fff;
+  color: #000;
+  border-radius: 20px;
+  padding: 40px 60px;
+  margin: 40px auto 0;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+
+.about-box * {
+  color: #000 !important;
+}
+
+.about-box h2 {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.about-box h3 {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.about-box ul {
+  margin-top: 16px;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+/* ✅ Footer stays centered below */
+footer {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  padding: 20px;
+  opacity: 0.9;
+  margin-top: 40px;
 }

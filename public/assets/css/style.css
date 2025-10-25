@@ -214,9 +214,9 @@ nav a:hover {
   position: relative;
   z-index: 2;
   max-width: 900px;
-  text-align: left; /* kiri sepenuhnya */
-  background: none; /* buang kotak belakang */
-  padding: 0;
+  text-align: left;
+  background: none;
+  padding: 160px 0 0 80px; /* ✅ tambah jarak ke bawah dari logo */
   margin-left: 0;
 }
 
@@ -266,35 +266,41 @@ nav a:hover {
 
 /* ===== CONTACT SECTION ===== */
 .contact-section {
-  text-align: center;
-  padding: 60px 20px;
-  background-color: #111;
+  text-align: left;
+  padding: 60px 80px;
+  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(245,245,245,0.9));
+  color: #000;
 }
 
 .contact-section h2 {
-  color: #fff;
+  color: #000;
+  margin-bottom: 12px;
 }
 
-.contact-section p, .contact-section a {
-  color: #ccc;
+.contact-section p, 
+.contact-section a {
+  color: #333;
   text-decoration: none;
+  font-size: 15px;
+  line-height: 1.6;
 }
+
 
 /* ===== FOOTER ===== */
 .site-footer {
-  background: #0d0d0d;
-  text-align: center;
-  padding: 25px 15px;
+  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(245,245,245,0.9));
+  text-align: left;
+  padding: 25px 80px;
   font-size: 13px;
-  color: #888;
-  line-height: 1.5;
-  border-top: 1px solid #222;
+  color: #333;
+  line-height: 1.6;
+  border-top: none;
+  margin-top: 20px;
 }
 
 .site-footer p {
   margin: 4px 0;
 }
-
 
 /* ✅ Move Sign In / Sign Up buttons to top-right */
 .top-nav {

@@ -42,18 +42,24 @@ body {
 }
 
 .brand img {
-  width: 60px;
+  width: 85px; /* 💥 besarkan logo */
   height: auto;
   cursor: pointer;
+}
+
+.top-nav nav {
+  display: flex;
+  align-items: center;
 }
 
 .top-nav nav a.btn-nav {
   margin-left: 12px;
   color: #000;
   background: #fff;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
+  font-weight: 600;
   transition: 0.3s;
 }
 
@@ -85,8 +91,8 @@ body.home-hero-page::before {
   position: relative;
   z-index: 3;
   max-width: 900px;
-  text-align: left; /* kiri */
-  margin-top: 200px; /* 💥 naikkan bawah logo tapi tak terlalu bawah */
+  text-align: left;
+  margin-top: 220px; /* 💥 bawah logo sikit tapi tak terlalu bawah */
   margin-left: 80px;
 }
 
@@ -114,7 +120,7 @@ body.home-hero-page::before {
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 40px auto 0;
+  margin: 40px 0 0 80px; /* selari dengan hero-inner */
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
   text-align: left;
   max-width: 700px;

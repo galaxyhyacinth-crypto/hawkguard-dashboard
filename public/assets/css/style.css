@@ -40,7 +40,7 @@ body {
   position: fixed;
   width: 100%;
   z-index: 999;
-  background: transparent; /* clear */
+  background: transparent;
 }
 
 .brand img {
@@ -89,7 +89,7 @@ body.home-hero-page::before {
 
 /* -------------------- CONTAINER LEFT -------------------- */
 .container-left {
-  margin-left: 80px; /* selari kiri */
+  margin-left: 80px;
 }
 
 /* Hero-inner */
@@ -105,7 +105,7 @@ body.home-hero-page::before {
   line-height: 1.2;
   margin-bottom: 20px;
   color: #fff; /* putih */
-  text-shadow: 0 0 10px rgba(0,180,255,0.6), 0 0 20px rgba(0,180,255,0.4);
+  text-shadow: none;
   border-bottom: none;
 }
 
@@ -117,13 +117,13 @@ body.home-hero-page::before {
 
 /* -------------------- ABOUT BOX -------------------- */
 .about-box {
-  background: rgba(245, 245, 245, 0.95); /* putih lembut */
+  background: rgba(245, 245, 245, 0.95);
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
   margin: 40px 0 0 0;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  text-align: left; /* align kiri */
+  text-align: left;
   max-width: 700px;
   z-index: 3;
   position: relative;
@@ -134,42 +134,47 @@ body.home-hero-page::before {
   margin-bottom: 12px;
 }
 
-/* -------------------- FOOTER BAWAH -------------------- */
+/* -------------------- FOOTER CONTACT BOX -------------------- */
 .footer-bottom {
   width: 100%;
-  background: rgba(60,60,60,0.85); /* hitam lembut */
-  color: #fff;
-  padding: 30px 40px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-  margin-top: 60px;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
 }
 
-.footer-bottom .footer-content {
+.footer-box-content {
+  background: rgba(0,0,0,0.7);
+  padding: 30px 40px;
+  border-radius: 20px;
   max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
   text-align: left;
 }
 
-.footer-bottom h2 {
-  color: #00b4ff;
+.footer-box-content h2 {
   margin-bottom: 12px;
+  color: #00b4ff;
 }
 
-.footer-bottom a {
+.footer-box-content a {
   color: #00b4ff;
   text-decoration: none;
 }
 
-.footer-bottom a:hover {
+.footer-box-content a:hover {
   text-decoration: underline;
 }
 
-.footer-bottom hr {
+.footer-box-content hr {
   margin: 15px 0;
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-.footer-bottom p {
+.footer-box-content p {
   font-size: 14px;
   line-height: 1.6;
 }

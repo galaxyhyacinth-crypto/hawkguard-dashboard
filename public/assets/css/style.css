@@ -104,7 +104,7 @@ body.home-hero-page::before {
   font-weight: 900;
   line-height: 1.2;
   margin-bottom: 20px;
-  color: #fff; /* putih */
+  color: #fff;
   text-shadow: none;
   border-bottom: none;
 }
@@ -121,7 +121,7 @@ body.home-hero-page::before {
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 10px 0 0 0; /* naik sikit dari 20px ke atas hero-desc */
+  margin: 10px 0 0 0; /* naik sikit ke atas hero text */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   text-align: left;
   max-width: 700px;
@@ -134,7 +134,7 @@ body.home-hero-page::before {
   margin-bottom: 12px;
 }
 
-/* -------------------- FOOTER CONTACT BOX MELEKAT PENUH BAWAH -------------------- */
+/* -------------------- FOOTER CONTACT BOX KECIL -------------------- */
 .footer-bottom-fixed {
   width: 100%;
   position: relative;
@@ -150,7 +150,7 @@ body.home-hero-page::before {
   color: #fff;
   text-align: left;
   border-radius: 0;
-  min-height: 100vh; /* pastikan box melekat bawah page */
+  /* box ikut content saiz sebenar */
 }
 
 /* -------------------- BACK TO TOP -------------------- */

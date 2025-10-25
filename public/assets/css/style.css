@@ -142,6 +142,7 @@ footer {
 
 /* 🔹 Navigation Bar */
 /* ===== TOP NAVIGATION ===== */
+/* ===== TOP NAVIGATION ===== */
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -181,53 +182,60 @@ nav a:hover {
   opacity: 0.7;
 }
 
-/* ===== HERO SECTION ===== */
+/* ===== HERO SECTION (Main Page) ===== */
 .home-hero-page {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, rgba(0,0,0,0.7), rgba(20,20,20,0.85));
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.75), rgba(25, 25, 25, 0.9));
   color: #fff;
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 120px 60px 60px 80px;
+  align-items: flex-start; /* ✅ kiri sepenuhnya */
+  padding: 120px 80px 60px 80px; /* ruang kiri besar sikit */
+  text-align: left; /* ✅ pastikan semua teks align kiri */
 }
 
 .hero-inner {
-  max-width: 700px;
-  text-align: left;
+  max-width: 800px;
+  text-align: left; /* ✅ semua teks dalam hero kiri */
 }
 
 .hero-title {
-  font-size: 48px;
+  font-size: 50px;
   line-height: 1.2;
   margin-bottom: 20px;
   font-weight: 700;
+  text-align: left; /* double confirm kiri */
 }
 
 .hero-desc {
   font-size: 18px;
   margin-bottom: 40px;
   color: #ccc;
+  text-align: left;
 }
 
-/* ===== ABOUT BOX ===== */
+/* ===== ABOUT SECTION ===== */
 .about-box {
-  background: transparent; /* tiada kotak belakang */
+  background: transparent;
   padding: 0;
   border-left: 3px solid #007bff;
   padding-left: 15px;
+  max-width: 650px;
+  text-align: left;
 }
 
 .about-box h2 {
   font-size: 24px;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .about-box p {
   font-size: 15px;
   color: #ddd;
-  max-width: 600px;
+  text-align: left;
 }
 
 /* ===== CONTACT SECTION ===== */

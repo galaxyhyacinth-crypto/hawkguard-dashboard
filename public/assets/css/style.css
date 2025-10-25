@@ -25,9 +25,11 @@
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
 }
+
+
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -97,31 +99,28 @@ nav a:hover {
 .home-hero-page {
   background: url('../images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
+  display: block; /* 💥 ubah dari flex ke block supaya boleh scroll */
   position: relative;
-  height: 100vh;
+  min-height: 100vh; /* bukan fixed 100vh */
   color: white;
-  overflow: hidden;
+  overflow-x: hidden; /* hanya sembunyi kiri-kanan je */
 }
 
-.home-hero-page::before {
+body.home-hero-page::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.3); /* 🔹 Lebih lembut (bukan gelap) */
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
 }
+
 
 .hero-inner {
   position: relative;
   z-index: 2;
   max-width: 900px;
   text-align: center;
-  margin-top: 480px; /* 💥 Turunkan lagi hero text */
+  margin-top: 450px; /* 💥 Turunkan lagi hero text */
 }
 
 .hero-title {
@@ -173,46 +172,27 @@ nav a:hover {
 /* -------------------- CONTACT SECTION -------------------- */
 .contact-section {
   text-align: left;
-  padding: 100px 80px;
-  background: linear-gradient(to top, #ffffff, #f3f3f3);
+  padding: 60px 80px; /* kecilkan padding supaya tak besar sangat */
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px; /* kecikkan border radius */
   color: #000;
-  width: 100%;
-}
-
-.contact-section h2 {
-  color: #000;
-  margin-bottom: 10px;
-  font-size: 24px;
-}
-
-.contact-section p,
-.contact-section a {
-  color: #333;
-  text-decoration: none;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.contact-section a:hover {
-  color: #0077cc;
-  text-decoration: underline;
+  width: 80%;
+  margin: 100px auto 40px; /* bagi tengah cantik */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* -------------------- FOOTER -------------------- */
-.site-footer {
-  background: linear-gradient(to top, #ffffff, #f3f3f3);
+footer {
+  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(30,30,30,0.85)); /* gradient black */
   text-align: left;
   padding: 25px 80px;
   font-size: 13px;
-  color: #333;
+  color: #eee;
   line-height: 1.6;
   border-top: none;
   margin-top: 0;
 }
-
-.site-footer p {
-  margin: 4px 0;
-}
+footer p { margin: 4px 0; }
 
 /* -------------------- BACK TO TOP BUTTON -------------------- */
 #backToTop {

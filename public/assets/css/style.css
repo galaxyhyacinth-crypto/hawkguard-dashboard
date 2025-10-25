@@ -27,6 +27,8 @@ body {
   color: #fff;
   overflow-x: hidden;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* -------------------- TOP NAV -------------------- */
@@ -37,9 +39,8 @@ body {
   padding: 15px 40px;
   position: fixed;
   width: 100%;
-  z-index: 999; /* sentiasa atas */
-  background: rgba(0, 0, 0, 0.5); /* separa lutsinar */
-  backdrop-filter: blur(5px); /* effect blur */
+  z-index: 999;
+  background: transparent; /* clear, tak ikut gradient */
 }
 
 .brand img {
@@ -56,7 +57,7 @@ body {
 .top-nav nav a.btn-nav {
   margin-left: 12px;
   color: #000;
-  background: #fff;
+  background: #fff; /* tetap putih */
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -75,8 +76,7 @@ body {
   background-size: cover;
   display: block;
   position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
+  flex: 1 0 auto;
 }
 
 body.home-hero-page::before {
@@ -89,14 +89,14 @@ body.home-hero-page::before {
 
 /* -------------------- CONTAINER LEFT -------------------- */
 .container-left {
-  margin-left: 80px; /* selari kiri dengan huruf H */
+  margin-left: 80px; /* selari kiri */
 }
 
 /* Hero-inner */
 .hero-inner {
   max-width: 900px;
   text-align: left;
-  padding-top: 140px; /* ruang bawah top-nav */
+  padding-top: 140px;
 }
 
 .hero-title {
@@ -104,13 +104,9 @@ body.home-hero-page::before {
   font-weight: 900;
   line-height: 1.2;
   margin-bottom: 20px;
-  color: #111; /* hitam gelap */
-  text-shadow:
-    0 0 8px rgba(0,180,255,0.6),
-    0 0 20px rgba(0,180,255,0.4);
-  border-bottom: 3px solid rgba(0,180,255,0.5); /* garis bawah biru lembut */
-  display: inline-block;
-  padding-bottom: 6px;
+  color: #fff; /* putih */
+  text-shadow: 0 0 10px rgba(0,180,255,0.6), 0 0 20px rgba(0,180,255,0.4);
+  border-bottom: none; /* buang garis biru */
 }
 
 .hero-desc {
@@ -121,22 +117,20 @@ body.home-hero-page::before {
 
 /* -------------------- ABOUT BOX -------------------- */
 .about-box {
-  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(200,220,255,0.9));
-  color: #000;
+  background: linear-gradient(135deg, rgba(30,30,30,0.95), rgba(60,60,60,0.9)); /* gradient hitam lembut */
+  color: #fff; /* teks putih */
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 40px 0 0 0; /* ikut container-left */
+  margin: 40px 0 0 0;
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
-  text-align: left;
+  text-align: right; /* semua text align kanan */
   max-width: 700px;
   z-index: 3;
   position: relative;
 }
 
-.about-box * { color: #000 !important; }
-
 .about-box h2 {
-  text-align: center;
+  text-align: right;
   margin-bottom: 12px;
 }
 
@@ -145,7 +139,7 @@ body.home-hero-page::before {
   position: relative;
   z-index: 4;
   width: 85%;
-  margin: 80px auto;
+  margin: 80px auto 0 auto;
   background: linear-gradient(to right, rgba(0,0,20,0.9), rgba(0,0,50,0.8));
   border-radius: 14px;
   padding: 40px 60px;
@@ -175,6 +169,16 @@ body.home-hero-page::before {
 .footer-box p {
   font-size: 14px;
   line-height: 1.6;
+}
+
+/* -------------------- COPYRIGHT MELAKAT BAWAH -------------------- */
+copyright {
+  flex-shrink: 0;
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
+  padding: 20px 0;
+  background: transparent;
 }
 
 /* -------------------- BACK TO TOP -------------------- */

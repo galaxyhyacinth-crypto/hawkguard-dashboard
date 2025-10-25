@@ -31,16 +31,18 @@ body {
   flex-direction: column;
 }
 
-/* -------------------- TOP NAV -------------------- */
+/* -------------------- TOP NAV (tetap di atas) -------------------- */
 .top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  position: fixed;
+  position: fixed;      /* tetap di atas */
+  top: 0;               /* mula dari atas */
   width: 100%;
-  z-index: 999;
-  background: transparent;
+  z-index: 9999;        /* atas semua elemen lain */
+  background: rgba(255, 255, 255, 0.95); /* ringan, nampak */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* nampak terangkat */
 }
 
 .brand img {
@@ -146,11 +148,29 @@ body.home-hero-page::before {
 .footer-box-fixed {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 40px;
+  padding: 40px 40px;
   color: #fff;
   text-align: left;
   border-radius: 0;
-  /* box ikut content saiz sebenar */
+}
+
+/* Jarak & spacing dalam footer */
+.footer-box-fixed h2 {
+  margin-bottom: 20px;
+  color: #00b4ff;
+}
+
+.footer-box-fixed p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.footer-box-fixed hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.8);
+  width: 100%; /* full width */
+  margin: 20px 0;
 }
 
 /* -------------------- BACK TO TOP -------------------- */

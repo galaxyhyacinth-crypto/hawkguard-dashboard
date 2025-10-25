@@ -40,7 +40,7 @@ body {
   position: fixed;
   width: 100%;
   z-index: 999;
-  background: transparent; /* clear, tak ikut gradient */
+  background: transparent; /* clear */
 }
 
 .brand img {
@@ -57,7 +57,7 @@ body {
 .top-nav nav a.btn-nav {
   margin-left: 12px;
   color: #000;
-  background: #fff; /* tetap putih */
+  background: #fff;
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -106,7 +106,7 @@ body.home-hero-page::before {
   margin-bottom: 20px;
   color: #fff; /* putih */
   text-shadow: 0 0 10px rgba(0,180,255,0.6), 0 0 20px rgba(0,180,255,0.4);
-  border-bottom: none; /* buang garis biru */
+  border-bottom: none;
 }
 
 .hero-desc {
@@ -117,68 +117,61 @@ body.home-hero-page::before {
 
 /* -------------------- ABOUT BOX -------------------- */
 .about-box {
-  background: linear-gradient(135deg, rgba(30,30,30,0.95), rgba(60,60,60,0.9)); /* gradient hitam lembut */
-  color: #fff; /* teks putih */
+  background: rgba(245, 245, 245, 0.95); /* putih lembut */
+  color: #000;
   border-radius: 20px;
   padding: 40px 60px;
   margin: 40px 0 0 0;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
-  text-align: right; /* semua text align kanan */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  text-align: left; /* align kiri */
   max-width: 700px;
   z-index: 3;
   position: relative;
 }
 
 .about-box h2 {
-  text-align: right;
+  text-align: left;
   margin-bottom: 12px;
 }
 
-/* -------------------- FOOTER + CONTACT BOX -------------------- */
-.footer-box {
-  position: relative;
-  z-index: 4;
-  width: 85%;
-  margin: 80px auto 0 auto;
-  background: linear-gradient(to right, rgba(0,0,20,0.9), rgba(0,0,50,0.8));
-  border-radius: 14px;
-  padding: 40px 60px;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+/* -------------------- FOOTER BAWAH -------------------- */
+.footer-bottom {
+  width: 100%;
+  background: rgba(60,60,60,0.85); /* hitam lembut */
   color: #fff;
+  padding: 30px 40px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  margin-top: 60px;
 }
 
-.footer-box a {
+.footer-bottom .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.footer-bottom h2 {
+  color: #00b4ff;
+  margin-bottom: 12px;
+}
+
+.footer-bottom a {
   color: #00b4ff;
   text-decoration: none;
 }
 
-.footer-box a:hover {
+.footer-bottom a:hover {
   text-decoration: underline;
 }
 
-.footer-box h2 {
-  color: #00b4ff;
-  margin-bottom: 10px;
+.footer-bottom hr {
+  margin: 15px 0;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
-.footer-box hr {
-  margin: 20px 0;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.footer-box p {
+.footer-bottom p {
   font-size: 14px;
   line-height: 1.6;
-}
-
-/* -------------------- COPYRIGHT MELAKAT BAWAH -------------------- */
-copyright {
-  flex-shrink: 0;
-  text-align: center;
-  color: #ccc;
-  font-size: 14px;
-  padding: 20px 0;
-  background: transparent;
 }
 
 /* -------------------- BACK TO TOP -------------------- */

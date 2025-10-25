@@ -6,15 +6,11 @@
   <title>HawkGuard Surveillance System</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-
 <body class="home-hero-page">
 
   <!-- 🔹 Top Navigation -->
   <div class="top-nav">
-    <div class="brand">
-      <img src="assets/images/hawk-logo.png" alt="HawkGuard Logo" class="nav-logo">
-      HAWKGUARD
-    </div>
+    <div class="brand">🦅 HAWKGUARD</div>
     <nav>
       <a href="#contact" class="btn-nav">Contact</a>
       <a href="sign-in.html" class="btn-nav">Sign In</a>
@@ -24,14 +20,14 @@
 
   <!-- 🔹 Hero Section -->
   <div class="hero-inner fade-in-box">
-    <h1 class="hero-title">Smart License Plate Recognition System</h1>
-    <p>Automated surveillance and real-time alerts for registered and unregistered vehicles.</p>
+    <h1 class="hero-title">HAWKGUARD SURVEILLANCE SYSTEM</h1>
+    <p class="hero-desc">Automated surveillance and real-time alerts for registered and unregistered vehicles.</p>
 
     <div class="about-box fade-in-box">
       <h2>About HawkGuard</h2>
       <p>
-        HawkGuard Surveillance System captures and records vehicle plate detections, 
-        providing instant alerts for unregistered plates and real-time monitoring for security teams.
+        HawkGuard Surveillance System captures and records vehicle plate detections, providing instant alerts for
+        unregistered plates and real-time monitoring for security teams.
       </p>
     </div>
   </div>
@@ -39,49 +35,47 @@
   <!-- 🔹 Contact Section -->
   <section id="contact" class="contact-section">
     <h2>Contact Us</h2>
-    <p>Email: 
-      <a href="mailto:hawkguardsurveillance.system@gmail.com">
-        hawkguardsurveillance.system@gmail.com
-      </a>
-    </p>
-    <p>Contact: 
-      <a href="tel:01136651056">011 3665 1056</a>
-    </p>
+    <p>Email: <a href="mailto:hawkguardsurveillance.system@gmail.com">hawkguardsurveillance.system@gmail.com</a></p>
+    <p>Contact: <a href="tel:01136651056">011 3665 1056</a></p>
   </section>
 
   <!-- 🔹 Footer -->
-  <footer class="site-footer">
-    <p>© HAWKGUARD SURVEILLANCE SYSTEM® 2025. All Rights Reserved.</p>
-    <p>Best viewed with any modern web browsers with resolution of 1280x1024.</p>
+  <footer>
+    © HAWKGUARD SURVEILLANCE SYSTEM® 2025. All Rights Reserved.<br>
+    Best viewed with any modern web browsers with resolution of 1280x1024.
   </footer>
 
-  <!-- 🔹 Scroll & Back to Top -->
-  <button id="backToTop">↑</button>
-
+  <!-- 🔹 Smooth Scroll Script -->
   <script>
-    // Smooth scroll untuk anchor #link
+    // Smooth scroll untuk anchor #
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
-    // Klik logo -> scroll balik atas
+    // Klik logo scroll balik atas
     document.querySelector('.brand').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Butang Back to Top
+    // Back to top button
     const backToTopBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-      backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+      if (window.scrollY > 300) backToTopBtn.style.display = 'block';
+      else backToTopBtn.style.display = 'none';
     });
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
+
+  <!-- 🔹 Back to Top Button -->
+  <button id="backToTop">↑</button>
 
 </body>
 </html>

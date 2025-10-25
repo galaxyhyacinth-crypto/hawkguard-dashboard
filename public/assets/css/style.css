@@ -12,30 +12,16 @@
 }
 
 /* -------------------- GLOBAL VARIABLES & RESET -------------------- */
-:root {
-  --card-bg: #fff;
-  --text-dark: #000;
-  --white: #fff;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 html, body {
   scroll-behavior: smooth;
-}
-
-
-
-body {
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
   overflow-x: hidden;
-  min-height: 100vh;
 }
 
 /* -------------------- TOP NAVIGATION -------------------- */
@@ -62,11 +48,6 @@ body {
   cursor: pointer;
 }
 
-.nav-logo {
-  width: 45px;
-  height: auto;
-}
-
 nav a {
   color: #fff;
   text-decoration: none;
@@ -75,18 +56,14 @@ nav a {
   transition: opacity 0.3s ease;
 }
 
-nav a:hover {
-  opacity: 0.7;
-}
+nav a:hover { opacity: 0.7; }
 
-/* Sign In / Sign Up Buttons */
 .top-nav nav a.btn-nav {
   margin-left: 12px;
   color: #000;
   background: #fff;
   padding: 8px 14px;
   border-radius: 8px;
-  text-decoration: none;
   transition: 0.3s;
 }
 
@@ -99,28 +76,30 @@ nav a:hover {
 .home-hero-page {
   background: url('../images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
-  display: block; /* 💥 ubah dari flex ke block supaya boleh scroll */
+  display: block;
   position: relative;
-  min-height: 100vh; /* bukan fixed 100vh */
+  min-height: 100vh;
   color: white;
-  overflow-x: hidden; /* hanya sembunyi kiri-kanan je */
+  padding-bottom: 150px;
 }
 
 body.home-hero-page::before {
   content: "";
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
+  height: 100%;
+  width: 100%;
   background: rgba(0, 0, 0, 0.55);
   z-index: 0;
+  pointer-events: none;
 }
-
 
 .hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 900px;
   text-align: center;
-  margin-top: 450px; /* 💥 Turunkan lagi hero text */
+  margin-top: 360px;
 }
 
 .hero-title {
@@ -129,6 +108,10 @@ body.home-hero-page::before {
   line-height: 1.2;
   margin-bottom: 20px;
   color: #fff;
+  text-shadow:
+    0 0 10px rgba(0, 180, 255, 0.8),
+    0 0 20px rgba(0, 180, 255, 0.6),
+    0 0 30px rgba(0, 180, 255, 0.4);
 }
 
 .hero-desc {
@@ -149,50 +132,36 @@ body.home-hero-page::before {
   max-width: 700px;
 }
 
-.about-box * {
-  color: #000 !important;
-}
+.about-box * { color: #000 !important; }
 
 .about-box h2 {
   text-align: center;
   margin-bottom: 12px;
 }
 
-.about-box h3 {
-  margin-top: 20px;
-  font-size: 20px;
-}
-
-.about-box ul {
-  margin-top: 16px;
-  padding-left: 20px;
-  line-height: 1.6;
-}
-
 /* -------------------- CONTACT SECTION -------------------- */
 .contact-section {
+  position: relative;
+  z-index: 3;
   text-align: left;
-  padding: 60px 80px; /* kecilkan padding supaya tak besar sangat */
+  padding: 60px 80px;
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 10px; /* kecikkan border radius */
+  border-radius: 10px;
   color: #000;
   width: 80%;
-  margin: 100px auto 40px; /* bagi tengah cantik */
+  margin: 100px auto 40px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* -------------------- FOOTER -------------------- */
 footer {
-  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(30,30,30,0.85)); /* gradient black */
+  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(30,30,30,0.85));
   text-align: left;
   padding: 25px 80px;
   font-size: 13px;
   color: #eee;
   line-height: 1.6;
-  border-top: none;
-  margin-top: 0;
 }
-footer p { margin: 4px 0; }
 
 /* -------------------- BACK TO TOP BUTTON -------------------- */
 #backToTop {

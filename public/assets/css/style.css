@@ -115,13 +115,13 @@ body.home-hero-page::before {
   margin-bottom: 40px;
 }
 
-/* -------------------- ABOUT BOX (tidak diubah) -------------------- */
+/* -------------------- ABOUT BOX (naik sedikit) -------------------- */
 .about-box {
   background: rgba(245, 245, 245, 0.95);
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 40px 0 0 0;
+  margin: 20px 0 0 0; /* naik sikit dari 40px ke 20px */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   text-align: left;
   max-width: 700px;
@@ -134,12 +134,13 @@ body.home-hero-page::before {
   margin-bottom: 12px;
 }
 
-/* -------------------- FOOTER CONTACT BOX MELEKAT -------------------- */
+/* -------------------- FOOTER CONTACT BOX MELEKAT PENUH BAWAH -------------------- */
 .footer-bottom-fixed {
   width: 100%;
   position: relative; /* bukan fixed */
   background: rgba(0,0,0,0.7);
   padding: 0;
+  margin: 0;
 }
 
 .footer-box-fixed {

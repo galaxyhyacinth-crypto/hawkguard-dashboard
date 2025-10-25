@@ -31,7 +31,7 @@ body {
   flex-direction: column;
 }
 
-/* -------------------- TOP NAV (tetap di atas) -------------------- */
+/* -------------------- TOP NAV (tetap atas) -------------------- */
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -121,7 +121,7 @@ body.home-hero-page::before {
   background: rgba(245, 245, 245, 0.95);
   color: #000;
   border-radius: 20px;
-  padding: 40px 60px;
+  padding: 20px 60px; /* turunkan tinggi box */
   margin: 10px 0 0 0; 
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   text-align: left;
@@ -153,7 +153,7 @@ body.home-hero-page::before {
   border-radius: 0;
 }
 
-/* Jarak & spacing dalam footer */
+/* Footer spacing */
 .footer-box-fixed h2 {
   margin-bottom: 20px;
   color: #00b4ff;
@@ -169,7 +169,7 @@ body.home-hero-page::before {
 .footer-box-fixed hr {
   border: none;
   border-top: 1px solid rgba(255,255,255,0.8);
-  width: 100vw;      /* full width viewport */
+  width: 100vw;      
   margin: 20px 0;    
   position: relative;
   left: 50%;
@@ -200,4 +200,36 @@ body.home-hero-page::before {
   background: #0096d6;
   transform: translateY(-4px);
   box-shadow: 0 0 20px rgba(0,179,255,0.6);
+}
+
+/* -------------------- RESPONSIVE DESIGN -------------------- */
+@media (max-width: 768px) {
+  .container-left {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .hero-title {
+    font-size: 36px;
+  }
+  .hero-desc {
+    font-size: 16px;
+  }
+  .about-box {
+    padding: 15px 20px;
+  }
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+  .top-nav nav {
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .top-nav nav a.btn-nav {
+    margin: 5px 5px 0 0;
+  }
+  .footer-box-fixed {
+    padding: 20px 20px;
+  }
 }

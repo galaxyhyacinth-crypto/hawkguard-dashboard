@@ -41,18 +41,6 @@ body {
 }
 
 /* -------------------- HOMEPAGE (CAR BACKGROUND) -------------------- */
-/* -------------------- HOMEPAGE (CAR BACKGROUND + CENTERED CONTENT) -------------------- */
-.home-hero-page {
-  background: url('images/home-hero.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-  position: relative;
-}
 
 /* dark overlay for better readability */
 .home-hero-page::before {
@@ -428,7 +416,7 @@ footer {
 
 /* ✅ HERO PAGE FIXES */
 .home-hero-page {
-  background: url('images/home-hero.jpg') no-repeat center center fixed;
+  background: url('public/assets/images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;

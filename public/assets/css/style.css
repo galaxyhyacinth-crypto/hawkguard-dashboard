@@ -185,15 +185,18 @@ footer {
 
 /* ✅ Move Sign In / Sign Up buttons to top-right */
 .top-nav {
-  position: absolute;
-  top: 20px;
-  left: 40px;
-  right: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 3;
+  padding: 15px 40px;
+  background: transparent; /* ✅ buang warna putih */
+  position: fixed; /* supaya kekal di atas bila scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
+
 
 .top-nav .brand {
   font-weight: 800;

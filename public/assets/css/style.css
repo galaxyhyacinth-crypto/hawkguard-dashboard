@@ -44,7 +44,7 @@ body {
 
 /* dark overlay for better readability */
 .home-hero-page::before {
-  content: "";
+  content: none;
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.55);
@@ -55,14 +55,11 @@ body {
 .hero-inner {
   position: relative;
   z-index: 2;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 80px 20px;
-  background: rgba(0, 0, 0, 0.55);
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  max-width: 900px;
+  text-align: left;
+  padding-left: 80px;
+  padding-right: 40px;
+  margin-top: 100px; /* ✅ turunkan lagi content */
 }
 
 .hero-title {
@@ -96,13 +93,17 @@ body {
 
 /* === ABOUT BOX === */
 .about-box {
-  background: rgba(255, 255, 255, 0.1);
+  background: none;
   color: #fff;
-  border-radius: 20px;
-  padding: 40px 60px;
-  margin: 60px auto;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
+  padding: 20px 0;
+  border-left: 3px solid #00b4d8;
+  padding-left: 20px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.about-box * {
+  color: #fff !important;
 }
 
 .about-box h2, .about-box h3 {
@@ -185,19 +186,18 @@ nav a:hover {
 /* ===== HERO SECTION (Main Page) ===== */
 /* ✅ HERO PAGE FIXES */
 .home-hero-page {
-  background: linear-gradient(to bottom right, rgba(0,0,0,0.8), rgba(40,40,40,0.9)), 
-              url('../images/home-hero.jpg') no-repeat center center fixed;
+  background: url('../images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
+  color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; /* kiri sepenuhnya */
+  justify-content: flex-start; /* ✅ supaya content turun ke bawah */
+  align-items: flex-start;
   text-align: left;
   position: relative;
-  height: 100vh;
-  color: white;
-  overflow: hidden;
-  padding-left: 80px; /* jarak kiri */
+  min-height: 100vh; /* ✅ biar boleh scroll bawah */
+  padding-top: 200px; /* ✅ jarakkan dari logo */
+  overflow-y: auto; /* ✅ allow scroll */
 }
 
 /* ✅ Ensure overlay is visible */
@@ -267,14 +267,15 @@ nav a:hover {
 /* ===== CONTACT SECTION ===== */
 .contact-section {
   text-align: left;
-  padding: 60px 80px;
+  padding: 80px 80px;
   background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(245,245,245,0.9));
   color: #000;
+  width: 100%;
 }
 
 .contact-section h2 {
   color: #000;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .contact-section p, 
@@ -295,7 +296,7 @@ nav a:hover {
   color: #333;
   line-height: 1.6;
   border-top: none;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .site-footer p {

@@ -140,6 +140,48 @@ footer {
   z-index: 3;
 }
 
+/* 🔹 Navigation Bar */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  color: #003366;
+}
+
+.nav-logo {
+  width: 45px;
+  height: auto;
+}
+
+/* 🔹 Footer Section */
+.site-footer {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+  border-top: 1px solid #ddd;
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
 
 /* ✅ Move Sign In / Sign Up buttons to top-right */
 .top-nav {

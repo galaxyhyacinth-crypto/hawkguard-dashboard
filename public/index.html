@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HawkGuard Surveillance System</title>
+  <title>HAWKGUARD SURVEILLANCE SYSTEM</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="home-hero-page">
 
   <!-- 🔹 Top Navigation -->
   <div class="top-nav">
-    <div class="brand">🦅 HAWKGUARD</div>
+    <div class="brand">
+      <img src="assets/images/hawk-logo.png" alt="HSS Logo" class="nav-logo" />
+    </div>
     <nav>
       <a href="#contact" class="btn-nav">Contact</a>
       <a href="sign-in.html" class="btn-nav">Sign In</a>
@@ -21,13 +23,13 @@
   <!-- 🔹 Hero Section -->
   <div class="hero-inner fade-in-box">
     <h1 class="hero-title">HAWKGUARD SURVEILLANCE SYSTEM</h1>
-    <p class="hero-desc">Automated surveillance and real-time alerts for registered and unregistered vehicles.</p>
+    <p class="hero-desc">Automated vehicle detection, alerting, and smart plate recognition for your security system.</p>
 
     <div class="about-box fade-in-box">
       <h2>About HawkGuard</h2>
       <p>
-        HawkGuard Surveillance System captures and records vehicle plate detections, providing instant alerts for
-        unregistered plates and real-time monitoring for security teams.
+        HawkGuard Surveillance System is a smart, camera-based license plate detection solution designed to enhance 
+        perimeter security, vehicle monitoring, and instant alert notifications.
       </p>
     </div>
   </div>
@@ -45,9 +47,9 @@
     Best viewed with any modern web browsers with resolution of 1280x1024.
   </footer>
 
-  <!-- 🔹 Smooth Scroll Script -->
+  <!-- 🔹 Scripts -->
   <script>
-    // Smooth scroll untuk anchor #
+    // Smooth scroll untuk semua link #
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -58,7 +60,7 @@
       });
     });
 
-    // Klik logo scroll balik atas
+    // Klik logo scroll balik ke atas
     document.querySelector('.brand').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -74,8 +76,7 @@
     });
   </script>
 
-  <!-- 🔹 Back to Top Button -->
+  <!-- 🔹 Back to Top -->
   <button id="backToTop">↑</button>
-
 </body>
 </html>

@@ -175,6 +175,37 @@ footer {
   color: #fff;
 }
 
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #007bff; /* boleh tukar ikut tema */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.step p {
+  margin: 0;
+  font-size: 15px;
+}
+
+
 
 /* -------------------- SIGN-IN & REGISTER (NEON BLUE BACKGROUND) -------------------- */
 .sign-bg {

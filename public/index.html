@@ -20,21 +20,29 @@
     <p>Automated surveillance and monitoring with instant alerts.</p>
 
     <div class="about-box fade-in-box">
-      <h2>About HawkGuard</h2>
-      <p>
-        HawkGuard Surveillance System captures license plate detections from cameras, stores records (entries/exits),
-        and shows real-time registered/unregistered plate events.
-      </p>
+  <h2>About HawkGuard</h2>
+  <p>
+    HawkGuard Surveillance System captures license plate detections from cameras, stores records (entries/exits),
+    and shows real-time registered/unregistered plate events.
+  </p>
 
-      <h3>How It Works (Summary)</h3>
-      <ul>
-        <li>Camera captures plate image and posts into Supabase (ENTRIES / UNREGISTERED LOGS).</li>
-        <li>Registered plates are matched to the users table; unregistered plates are logged as alerts.</li>
-        <li>Admin logs in using email + password; backend sends a 6-digit OTP for verification.</li>
-        <li>Dashboard updates in real-time when new entries or unregistered logs are inserted.</li>
-      </ul>
+  <h3>How It Works</h3>
+  <div class="how-it-works">
+    <div class="step">
+      <div class="circle">1</div>
+      <p>Camera captures vehicle plate automatically.</p>
+    </div>
+    <div class="step">
+      <div class="circle">2</div>
+      <p>System checks if the plate is registered.</p>
+    </div>
+    <div class="step">
+      <div class="circle">3</div>
+      <p>Unregistered plates trigger instant alert.</p>
+    </div>
+    <div class="step">
+      <div class="circle">4</div>
+      <p>Admin logs in and reviews real-time dashboard.</p>
     </div>
   </div>
-
-  <footer>© 2025 HawkGuard Group</footer>
-</body>
+</div>

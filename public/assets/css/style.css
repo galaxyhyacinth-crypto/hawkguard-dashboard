@@ -115,7 +115,7 @@ body.home-hero-page::before {
   margin-bottom: 40px;
 }
 
-/* -------------------- ABOUT BOX -------------------- */
+/* -------------------- ABOUT BOX (tidak diubah) -------------------- */
 .about-box {
   background: rgba(245, 245, 245, 0.95);
   color: #000;
@@ -134,47 +134,43 @@ body.home-hero-page::before {
   margin-bottom: 12px;
 }
 
-/* -------------------- FOOTER CONTACT BOX -------------------- */
-.footer-bottom {
+/* -------------------- FOOTER CONTACT BOX MELEKAT -------------------- */
+.footer-bottom-fixed {
   width: 100%;
-  padding: 40px 20px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
-}
-
-.footer-box-content {
+  position: relative; /* bukan fixed */
   background: rgba(0,0,0,0.7);
-  padding: 30px 40px;
-  border-radius: 20px;
-  max-width: 1200px;
-  width: 100%;
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  text-align: left;
+  padding: 0;
 }
 
-.footer-box-content h2 {
+.footer-box-fixed {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 40px;
+  color: #fff;
+  text-align: left;
+  border-radius: 0;
+}
+
+.footer-box-fixed h2 {
   margin-bottom: 12px;
   color: #00b4ff;
 }
 
-.footer-box-content a {
+.footer-box-fixed a {
   color: #00b4ff;
   text-decoration: none;
 }
 
-.footer-box-content a:hover {
+.footer-box-fixed a:hover {
   text-decoration: underline;
 }
 
-.footer-box-content hr {
+.footer-box-fixed hr {
   margin: 15px 0;
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-.footer-box-content p {
+.footer-box-fixed p {
   font-size: 14px;
   line-height: 1.6;
 }

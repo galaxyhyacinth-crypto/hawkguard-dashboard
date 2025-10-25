@@ -416,7 +416,7 @@ footer {
 
 /* ✅ HERO PAGE FIXES */
 .home-hero-page {
-  background: url('assets/images/home-hero.jpg') no-repeat center center fixed;
+  background: url('/assets/images/home-hero.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;

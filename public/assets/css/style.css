@@ -25,9 +25,15 @@
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
   min-height: 100vh;
-  color: var(--white);
 }
 
 /* -------------------- TOP NAVIGATION -------------------- */
@@ -51,6 +57,7 @@ body {
   font-weight: 800;
   font-size: 20px;
   color: #fff;
+  cursor: pointer;
 }
 
 .nav-logo {
@@ -66,7 +73,9 @@ nav a {
   transition: opacity 0.3s ease;
 }
 
-nav a:hover { opacity: 0.7; }
+nav a:hover {
+  opacity: 0.7;
+}
 
 /* Sign In / Sign Up Buttons */
 .top-nav nav a.btn-nav {
@@ -78,6 +87,7 @@ nav a:hover { opacity: 0.7; }
   text-decoration: none;
   transition: 0.3s;
 }
+
 .top-nav nav a.btn-nav:hover {
   background: #00b4d8;
   color: #fff;
@@ -89,7 +99,7 @@ nav a:hover { opacity: 0.7; }
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   position: relative;
@@ -102,7 +112,7 @@ nav a:hover { opacity: 0.7; }
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.3); /* 🔹 Lebih lembut (bukan gelap) */
   z-index: 1;
 }
 
@@ -111,7 +121,7 @@ nav a:hover { opacity: 0.7; }
   z-index: 2;
   max-width: 900px;
   text-align: center;
-  margin-top: 380px; /* 💥 Naikkan nilai ni kalau nak lagi bawah (contoh 400px atau 450px) */
+  margin-top: 480px; /* 💥 Turunkan lagi hero text */
 }
 
 .hero-title {
@@ -140,7 +150,9 @@ nav a:hover { opacity: 0.7; }
   max-width: 700px;
 }
 
-.about-box * { color: #000 !important; }
+.about-box * {
+  color: #000 !important;
+}
 
 .about-box h2 {
   text-align: center;
@@ -161,25 +173,34 @@ nav a:hover { opacity: 0.7; }
 /* -------------------- CONTACT SECTION -------------------- */
 .contact-section {
   text-align: left;
-  padding: 80px 80px;
-  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(245,245,245,0.9));
+  padding: 100px 80px;
+  background: linear-gradient(to top, #ffffff, #f3f3f3);
   color: #000;
   width: 100%;
 }
 
-.contact-section h2 { color: #000; margin-bottom: 10px; }
+.contact-section h2 {
+  color: #000;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
 
-.contact-section p, 
+.contact-section p,
 .contact-section a {
   color: #333;
   text-decoration: none;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.contact-section a:hover {
+  color: #0077cc;
+  text-decoration: underline;
 }
 
 /* -------------------- FOOTER -------------------- */
 .site-footer {
-  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(245,245,245,0.9));
+  background: linear-gradient(to top, #ffffff, #f3f3f3);
   text-align: left;
   padding: 25px 80px;
   font-size: 13px;
@@ -189,7 +210,9 @@ nav a:hover { opacity: 0.7; }
   margin-top: 0;
 }
 
-.site-footer p { margin: 4px 0; }
+.site-footer p {
+  margin: 4px 0;
+}
 
 /* -------------------- BACK TO TOP BUTTON -------------------- */
 #backToTop {

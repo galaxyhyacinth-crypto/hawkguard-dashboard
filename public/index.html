@@ -1,82 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HAWKGUARD SURVEILLANCE SYSTEM</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HawkGuard Surveillance System</title>
+  <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
+
 <body class="home-hero-page">
 
-  <!-- 🔹 Top Navigation -->
+  <!-- 🔝 TOP NAV -->
   <div class="top-nav">
     <div class="brand">
-      <img src="assets/images/hawk-logo.png" alt="HSS Logo" class="nav-logo" />
+      <img src="/assets/images/hawk-logo.png" alt="HSS Logo" class="nav-logo">
     </div>
     <nav>
-      <a href="#contact" class="btn-nav">Contact</a>
-      <a href="sign-in.html" class="btn-nav">Sign In</a>
-      <a href="register.html" class="btn-nav">Sign Up</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="/sign-in.html" class="btn-nav">Sign In</a>
     </nav>
   </div>
 
-  <!-- 🔹 Hero Section -->
+  <!-- 🦅 HERO SECTION -->
   <div class="hero-inner fade-in-box">
     <h1 class="hero-title">HAWKGUARD SURVEILLANCE SYSTEM</h1>
-    <p class="hero-desc">Automated vehicle detection, alerting, and smart plate recognition for your security system.</p>
-
-    <div class="about-box fade-in-box">
-      <h2>About HawkGuard</h2>
-      <p>
-        HawkGuard Surveillance System is a smart, camera-based license plate detection solution designed to enhance 
-        perimeter security, vehicle monitoring, and instant alert notifications.
-      </p>
-    </div>
+    <p class="hero-desc">
+      Advanced AI-Driven Vehicle Monitoring and Smart License Plate Detection for Real-Time Security.
+    </p>
   </div>
 
-  <!-- 🔹 Contact Section -->
-  <section id="contact" class="contact-section">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:hawkguardsurveillance.system@gmail.com">hawkguardsurveillance.system@gmail.com</a></p>
-    <p>Contact: <a href="tel:01136651056">011 3665 1056</a></p>
+  <!-- 🧩 ABOUT SECTION -->
+  <section id="about" class="about-box fade-in-box">
+    <h2>About HawkGuard</h2>
+    <p>
+      HawkGuard Surveillance System (HSS) is a smart AI-based surveillance solution built to enhance 
+      vehicle and perimeter monitoring through license plate recognition and real-time analytics.
+    </p>
+
+    <h3>Core Features:</h3>
+    <ul>
+      <li>Real-time vehicle plate recognition and logging.</li>
+      <li>Cloud-connected surveillance dashboard.</li>
+      <li>Secure authentication and user management.</li>
+      <li>Smart alert notifications for unauthorized entries.</li>
+    </ul>
   </section>
 
-  <!-- 🔹 Footer -->
+  <!-- 📞 CONTACT SECTION -->
+  <section id="contact" class="contact-section fade-in-box">
+    <h2>Contact Us</h2>
+    <p>Email: support@hawkguardsystem.com</p>
+    <p>Phone: +60 12-345 6789</p>
+    <p>Address: Taman Desa Molek, Johor Bahru, Malaysia</p>
+  </section>
+
+  <!-- ⚙️ FOOTER -->
   <footer>
-    © HAWKGUARD SURVEILLANCE SYSTEM® 2025. All Rights Reserved.<br>
-    Best viewed with any modern web browsers with resolution of 1280x1024.
+    <div class="footer-info">
+      <p>© HAWKGUARD SURVEILLANCE SYSTEM® 2025. All Rights Reserved.<br>
+      Best viewed with any modern web browsers with resolution of 1280x1024.</p>
+      <div class="contact-footer">
+        <h3>Contact Us</h3>
+        <p>Email: support@hawkguardsystem.com</p>
+        <p>Phone: +60 12-345 6789</p>
+      </div>
+    </div>
   </footer>
 
-  <!-- 🔹 Scripts -->
+  <button id="backToTop" title="Back to top">↑</button>
+
   <script>
-    // Smooth scroll untuk semua link #
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // Klik logo scroll balik ke atas
-    document.querySelector('.brand').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Back to top button
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) backToTopBtn.style.display = 'block';
-      else backToTopBtn.style.display = 'none';
-    });
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    // Back to top
+    const backToTopBtn = document.getElementById("backToTop");
+    window.onscroll = () => {
+      if (document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    };
+    backToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
   </script>
 
-  <!-- 🔹 Back to Top -->
-  <button id="backToTop">↑</button>
 </body>
 </html>

@@ -86,7 +86,7 @@ body.home-hero-page::before {
   z-index: 3;
   max-width: 900px;
   text-align: left; /* kiri */
-  margin-top: 260px;
+  margin-top: 200px; /* 💥 naikkan bawah logo tapi tak terlalu bawah */
   margin-left: 80px;
 }
 

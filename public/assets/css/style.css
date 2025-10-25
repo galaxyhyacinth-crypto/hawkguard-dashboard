@@ -111,6 +111,7 @@ nav a:hover { opacity: 0.7; }
   z-index: 2;
   max-width: 900px;
   text-align: center;
+  margin-top: 220px; /* 💥 sebelum ni mungkin 0 — ubah jadi lebih besar */
 }
 
 .hero-title {

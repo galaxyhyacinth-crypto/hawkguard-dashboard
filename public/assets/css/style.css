@@ -37,12 +37,11 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  position: fixed;      /* tetap di atas */
-  top: 0;               /* mula dari atas */
+  position: fixed;      
+  top: 0;               
   width: 100%;
-  z-index: 9999;        /* atas semua elemen lain */
-  background: rgba(255, 255, 255, 0.95); /* ringan, nampak */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* nampak terangkat */
+  z-index: 9999;        
+  background: transparent; /* Kekal asal */
 }
 
 .brand img {
@@ -59,7 +58,7 @@ body {
 .top-nav nav a.btn-nav {
   margin-left: 12px;
   color: #000;
-  background: #fff;
+  background: #fff; /* Kekal asal */
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -106,7 +105,7 @@ body.home-hero-page::before {
   font-weight: 900;
   line-height: 1.2;
   margin-bottom: 20px;
-  color: #fff;
+  color: #fff; /* putih */
   text-shadow: none;
   border-bottom: none;
 }
@@ -123,7 +122,7 @@ body.home-hero-page::before {
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 10px 0 0 0; /* naik sikit ke atas hero text */
+  margin: 10px 0 0 0; 
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   text-align: left;
   max-width: 700px;
@@ -166,11 +165,15 @@ body.home-hero-page::before {
   margin-bottom: 20px;
 }
 
+/* Garisan putih full width */
 .footer-box-fixed hr {
   border: none;
   border-top: 1px solid rgba(255,255,255,0.8);
-  width: 100%; /* full width */
-  margin: 20px 0;
+  width: 100vw;      /* full width viewport */
+  margin: 20px 0;    
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* -------------------- BACK TO TOP -------------------- */

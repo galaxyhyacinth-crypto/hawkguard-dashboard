@@ -183,59 +183,85 @@ nav a:hover {
 }
 
 /* ===== HERO SECTION (Main Page) ===== */
+/* ✅ HERO PAGE FIXES */
 .home-hero-page {
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.75), rgba(25, 25, 25, 0.9));
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.8), rgba(40,40,40,0.9)), 
+              url('../images/home-hero.jpg') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* ✅ kiri sepenuhnya */
-  padding: 120px 80px 60px 80px; /* ruang kiri besar sikit */
-  text-align: left; /* ✅ pastikan semua teks align kiri */
+  align-items: flex-start; /* kiri sepenuhnya */
+  text-align: left;
+  position: relative;
+  height: 100vh;
+  color: white;
+  overflow: hidden;
+  padding-left: 80px; /* jarak kiri */
 }
 
+/* ✅ Ensure overlay is visible */
+.home-hero-page::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* ✅ Inner content on top of overlay */
 .hero-inner {
-  max-width: 800px;
-  text-align: left; /* ✅ semua teks dalam hero kiri */
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: left; /* kiri sepenuhnya */
+  background: none; /* buang kotak belakang */
+  padding: 0;
+  margin-left: 0;
 }
 
 .hero-title {
-  font-size: 50px;
+  font-size: 52px;
+  font-weight: 800;
   line-height: 1.2;
   margin-bottom: 20px;
-  font-weight: 700;
-  text-align: left; /* double confirm kiri */
+  color: #fff;
+  text-align: left;
 }
 
 .hero-desc {
   font-size: 18px;
-  margin-bottom: 40px;
   color: #ccc;
   text-align: left;
+  margin-bottom: 40px;
 }
 
-/* ===== ABOUT SECTION ===== */
+/* ✅ About Box — transparent, simple */
 .about-box {
   background: transparent;
+  color: #fff;
+  border: none;
   padding: 0;
-  border-left: 3px solid #007bff;
-  padding-left: 15px;
-  max-width: 650px;
+  margin-top: 40px;
   text-align: left;
+  max-width: 700px;
+}
+
+.about-box * {
+  color: #e6e6e6;
 }
 
 .about-box h2 {
-  font-size: 24px;
+  font-size: 26px;
   margin-bottom: 10px;
+  color: #fff;
   text-align: left;
 }
 
 .about-box p {
-  font-size: 15px;
-  color: #ddd;
-  text-align: left;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #ccc;
 }
 
 /* ===== CONTACT SECTION ===== */

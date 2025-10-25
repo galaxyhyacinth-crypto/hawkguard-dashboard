@@ -42,7 +42,7 @@ body {
 }
 
 .brand img {
-  width: 85px; /* 💥 besarkan logo */
+  width: 85px;
   height: auto;
   cursor: pointer;
 }
@@ -86,17 +86,18 @@ body.home-hero-page::before {
   z-index: 0;
 }
 
-/* Align kiri hero content */
-.hero-inner {
-  position: relative;
-  z-index: 3;
-  max-width: 900px;
-  text-align: left;
-  margin-top: 220px; /* 💥 bawah logo sikit tapi tak terlalu bawah */
-  margin-left: 80px;
+/* -------------------- CONTAINER LEFT -------------------- */
+.container-left {
+  margin-left: 80px; /* selari dengan huruf H */
 }
 
-/* Tajuk biru bold dengan glow */
+/* Hero-inner */
+.hero-inner {
+  max-width: 900px;
+  text-align: left;
+  padding-top: 140px; /* ruang bawah top-nav */
+}
+
 .hero-title {
   font-size: 52px;
   font-weight: 900;
@@ -120,7 +121,7 @@ body.home-hero-page::before {
   color: #000;
   border-radius: 20px;
   padding: 40px 60px;
-  margin: 40px 0 0 80px; /* selari dengan hero-inner */
+  margin: 40px 0 0 0; /* ikut container-left */
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
   text-align: left;
   max-width: 700px;

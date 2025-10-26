@@ -146,6 +146,17 @@
       font-weight: 500;
       z-index: 9999;
     }
+  
+  /* ✅ Tambahan styling untuk alert-message putih */
+  .alert-message {
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #ddd;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    white-space: nowrap; /* elak patah baris */
+  }
+
   </style>
 </head>
 
@@ -189,8 +200,8 @@
       </form>
 
       <p class="muted">
-        Already have an account? <a href="sign-in.html">Sign In</a>
-      </p>
+  Already have an account? <a href="sign-in.html" class="signin-link"><strong>Sign In</strong></a>
+     </p>
     </div>
   </div>
 
@@ -230,3 +241,4 @@
   </script>
 </body>
 </html>
+<script src="assets/js/register.js"></script>

@@ -334,6 +334,19 @@ body.auth-page { display:flex; justify-content:center; align-items:center; min-h
   font-weight: 600;
 }
 
+/* ✅ Sign in link bold tanpa underline */
+.signin-link {
+  font-weight: 700;
+  text-decoration: none !important;
+  color: #000; /* atau biar warna asal */
+  cursor: pointer;
+}
+
+.signin-link:hover {
+  color: #007bff; /* optional: bila hover tukar sikit warna */
+}
+
+
 .auth-wrapper { display:flex; justify-content:center; align-items:center; width:100%; }
 .auth-card {
   background: rgba(245,245,245,0.95); padding:40px 30px; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.2);

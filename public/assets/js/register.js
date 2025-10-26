@@ -1,49 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("registerForm");
+  const form = document.getElementById("signInForm");
+
+  // 👁️ Toggle password same as register page
+  window.togglePassword = (id, btn) => {
+    const input = document.getElementById(id);
+    const icon = btn.querySelector("i");
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  };
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    const full_name = document.getElementById("full_name").value.trim();
     const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const retype = document.getElementById("retype_password").value.trim();
-
-    if (password !== retype) return showAlert("Passwords do not match", "error");
+    const password = document.getElementById("password").value;
 
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ full_name, email, password })
+        body: JSON.stringify({ email, password }),
       });
-
       const data = await res.json();
 
       if (res.ok && data.ok) {
-        showAlert("✅ Registered successfully! Redirecting...", "success");
-        setTimeout(() => (window.location.href = "/sign-in.html"), 2000);
-      } else if (data.error?.includes("already")) {
-        showAlert("⚠️ User already registered.", "error");
+        // ✅ simpan email utk OTP
+        sessionStorage.setItem("hawkguard_signin_email", email);
+        // ✅ redirect ke verify OTP page
+        window.location.href = "/verify-otp.html";
       } else {
-        showAlert(data.error || "❌ Registration failed.", "error");
+        alert(data.error || "Sign in failed");
       }
     } catch (err) {
       console.error(err);
-      showAlert("Server error. Please try again later.", "error");
+      alert("Server error. Please try again later.");
     }
   });
 });
-
-function showAlert(message, type = "error") {
-  const old = document.querySelector(".alert-message");
-  if (old) old.remove();
-
-  const alert = document.createElement("div");
-  alert.className = "alert-message";
-  alert.style.backgroundColor = type === "success" ? "#22c55e" : "#ef4444";
-  alert.textContent = message;
-
-  document.querySelector(".auth-card").appendChild(alert);
-  setTimeout(() => alert.remove(), 4000);
-}

@@ -1,17 +1,26 @@
-// api/verify-otp.js
-import { verifyOtp, deleteOtp } from "./otp_store.js";
+import { supabase } from "./_supabase.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
+
   try {
     const { email, otp } = req.body;
-    if (!email || !otp) return res.status(400).json({ error: "Missing fields" });
+    if (!email || !otp)
+      return res.status(400).json({ error: "Missing fields" });
 
-    const ok = verifyOtp(email, String(otp));
-    if (!ok) return res.status(400).json({ error: "Invalid or expired OTP" });
+    const { data, error } = await supabase
+      .from("otp_store")
+      .select("*")
+      .eq("email", email)
+      .eq("otp", otp)
+      .single();
 
-    // success — you can return a simple token or user info
-    deleteOtp(email);
+    if (error || !data) return res.status(400).json({ error: "Invalid or expired OTP" });
+
+    // Delete OTP after verification
+    await supabase.from("otp_store").delete().eq("email", email);
+
     return res.json({ ok: true, message: "OTP verified" });
   } catch (err) {
     console.error("verify-otp error", err);

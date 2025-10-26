@@ -1,15 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Verify OTP — HawkGuard</title>
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="auth-page">
 
 <div class="auth-wrapper">
-  <div class="auth-card fade-in-box">
+  <div class="auth-card">
     <h2>Enter OTP</h2>
     <p>Enter the 6-digit code sent to your email.</p>
 
@@ -22,7 +22,6 @@
       <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
     </div>
 
-    <div id="countdown" class="countdown">03:00</div>
     <button id="verify-otp-btn" class="btn auth-btn">Verify OTP</button>
     <p id="otp-msg" class="muted"></p>
     <p class="muted"><a href="sign-in.html">Back to sign in</a></p>

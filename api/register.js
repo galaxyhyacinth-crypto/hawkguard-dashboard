@@ -1,48 +1,55 @@
-// api/register.js
+import { supabase } from "./supabase.js";
 import bcrypt from "bcryptjs";
-import { supabase } from "./_supabase.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
   try {
-    const { full_name, email, password, recaptchaToken } = req.body;
-    if (!full_name || !email || !password) return res.status(400).json({ error: "Missing fields" });
+    const { full_name, email, password } = req.body;
 
-    // Optional reCAPTCHA verification (if configured)
-    if (process.env.RECAPTCHA_SECRET_KEY) {
-      try {
-        const r = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-          method: "POST",
-          body: new URLSearchParams({ secret: process.env.RECAPTCHA_SECRET_KEY, response: recaptchaToken })
-        });
-        const jr = await r.json();
-        if (!jr.success) return res.status(400).json({ error: "reCAPTCHA failed" });
-      } catch (e) {
-        console.warn("reCAPTCHA request failed:", e);
-        return res.status(400).json({ error: "reCAPTCHA verification failed" });
-      }
+    if (!full_name || !email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
     }
 
-    // password complexity
-    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$])[A-Za-z\d!@#$]{8,16}$/;
-    if (!pwdRegex.test(password)) return res.status(400).json({ error: "Password rules not met" });
+    // Check existing user
+    const { data: existingUser, error: selectError } = await supabase
+      .from("users")
+      .select("email")
+      .eq("email", email)
+      .maybeSingle();
 
-    const hash = await bcrypt.hash(password, 10);
-
-    const { error } = await supabase.from("users").insert([{ full_name, email, password: hash }]);
-    if (error) {
-      // nicer message for duplicate email
-      const msg = (error.message || "").toLowerCase();
-      if (msg.includes("duplicate") || msg.includes("users_email_key")) {
-        return res.status(400).json({ error: "User already registered" });
-      }
-      return res.status(400).json({ error: error.message || "Database error" });
+    if (selectError) {
+      console.error(selectError);
+      return res.status(500).json({ error: "Database error" });
     }
 
-    return res.json({ ok: true, message: "Registered successfully" });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already registered" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert user
+    const { error: insertError } = await supabase.from("users").insert([
+      {
+        full_name,
+        email,
+        password: hashedPassword,
+        created_at: new Date(),
+      },
+    ]);
+
+    if (insertError) {
+      console.error(insertError);
+      return res.status(500).json({ error: "Insert failed" });
+    }
+
+    return res.status(200).json({ ok: true, message: "Registered successfully" });
   } catch (err) {
-    console.error("register error", err);
-    return res.status(500).json({ error: "Server error" });
+    console.error("Server error:", err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }

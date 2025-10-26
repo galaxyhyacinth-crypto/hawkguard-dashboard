@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>HawkGuard Surveillance System</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="home-hero-page">
 
-  <!-- 🔹 Top Navigation (tetap atas, tidak ikut scroll) -->
+  <!-- 🔹 Top Navigation -->
   <div class="top-nav">
     <div class="brand">
-      <img src="assets/images/hawk-logo.png" alt="HSS Logo" class="nav-logo" />
+      <img src="assets/images/hawk-logo.png" alt="HawkGuard Logo" class="nav-logo" />
     </div>
     <nav>
       <a href="#contact" class="btn-nav">Contact</a>
@@ -20,39 +20,40 @@
     </nav>
   </div>
 
-  <!-- 🔹 Hero + About Container -->
+  <!-- 🔹 Hero Section -->
   <div class="container-left">
-    <!-- Hero Section -->
     <div class="hero-inner fade-in-box">
       <h1 class="hero-title">HAWKGUARD SURVEILLANCE SYSTEM</h1>
-      <p class="hero-desc">
-        Automated surveillance and real-time alerts for registered and unregistered vehicles.
-      </p>
+      <p class="hero-desc">Automated surveillance and real-time alerts for registered and unregistered vehicles.</p>
     </div>
 
-    <!-- About Box Naik sedikit & tinggi kecil -->
     <div class="about-box fade-in-box">
-      <h2>About</h2>
+      <h2>About Us</h2>
       <p>
-        Surveillance System captures and records vehicle plate detections, 
-        providing instant alerts for unregistered plates and real-time monitoring for security teams.
+        HawkGuard Surveillance System captures and records vehicle plate detections, providing instant alerts for
+        unregistered plates and real-time monitoring for security teams.
       </p>
+
+      <h2>How It Works</h2>
+      <ul class="how-it-works">
+        <li><span class="circle-num">1</span> Camera detects and captures plate</li>
+        <li><span class="circle-num">2</span> Data is matched and logged</li>
+        <li><span class="circle-num">3</span> Alerts are sent to admin</li>
+        <li><span class="circle-num">4</span> Dashboard updates in real time</li>
+      </ul>
     </div>
   </div>
 
-  <!-- Spacer supaya Contact Us hanya nampak bila scroll -->
-  <div style="height: 400px;"></div>
-
-  <!-- 🔹 Footer Contact Box Kecil Melekat ke Bawah -->
-  <footer class="footer-bottom-fixed" id="contact">
-    <div class="footer-box-fixed">
+  <!-- 🔹 Contact Us Section -->
+  <div class="contact-us-full fade-in-box" id="contact">
+    <div class="contact-us-inner">
       <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:hawkguardsurveillance.system@gmail.com">hawkguardsurveillance.system@gmail.com</a></p>
-      <p>Contact: <a href="tel:01136651056">011 3665 1056</a></p>
-      <hr />
+      <p>Email: <a href="mailto:hawkguardsurveillance.system@gmail.com" class="contact-link">hawkguardsurveillance.system@gmail.com</a></p>
+      <p>Contact: <a href="tel:01136651056" class="contact-link">011 3665 1056</a></p>
+      <hr>
       <p>© HAWKGUARD SURVEILLANCE SYSTEM® 2025. All Rights Reserved.</p>
     </div>
-  </footer>
+  </div>
 
   <!-- 🔹 Smooth Scroll + Back to Top -->
   <script>

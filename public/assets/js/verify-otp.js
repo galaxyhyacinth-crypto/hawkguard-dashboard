@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('verify-otp-btn');
   const msg = document.getElementById('otp-msg');
   const countdown = document.getElementById('countdown');
-  const BASE_URL = ""; // ✅ empty string → relative path (auto uses same origin)
-
+  const BASE_URL = ""; // relative path
 
   // auto-advance, numeric only, paste handling
   inputs.forEach((input, idx) => {
@@ -58,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         msg.style.color = 'red';
         return;
       }
-      // successful: redirect to dashboard and store name if server provided (we didn't)
-      // else just redirect
       window.location.href = '/dashboard.html';
     } catch (err) {
       console.error(err); alert('Server error');

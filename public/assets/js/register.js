@@ -1,70 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('register-form');
-  const pwd = document.getElementById('password');
-  const pwd2 = document.getElementById('password2');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("registerForm");
 
-  const BASE_URL = ""; // ✅ live domain
-
-  // toggle eyes
-  ['toggle-password','toggle-password2'].forEach(id => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const input = btn.previousElementSibling || document.querySelector(`#${id === 'toggle-password' ? 'password' : 'password2'}`);
-      if (input) input.type = input.type === 'password' ? 'text' : 'password';
-    });
-  });
-
-  function validatePassword(value){
-    return {
-      length: /^.{8,16}$/.test(value),
-      upper: /[A-Z]/.test(value),
-      lower: /[a-z]/.test(value),
-      number: /\d/.test(value),
-      special: /[!@#$]/.test(value)
-    };
-  }
-
-  pwd.addEventListener('input', () => {
-    const v = validatePassword(pwd.value);
-    document.getElementById('li-length').classList.toggle('valid', v.length);
-    document.getElementById('li-upper').classList.toggle('valid', v.upper);
-    document.getElementById('li-lower').classList.toggle('valid', v.lower);
-    document.getElementById('li-number').classList.toggle('valid', v.number);
-    document.getElementById('li-special').classList.toggle('valid', v.special);
-  });
-
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const full_name = document.getElementById('full_name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = pwd.value.trim();
-    const password2 = pwd2.value.trim();
 
-    if (password !== password2) return alert('Passwords do not match');
+    const full_name = document.getElementById("full_name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const retype = document.getElementById("retype_password").value.trim();
 
-    const v = validatePassword(password);
-    if (!v.length || !v.upper || !v.lower || !v.number || !v.special) {
-      return alert('Password does not meet complexity rules');
-    }
-
-    // get recaptcha token (if widget present)
-    let recaptchaToken = null;
-    if (window.grecaptcha) recaptchaToken = grecaptcha.getResponse();
+    if (password !== retype) return showAlert("Passwords do not match", "error");
 
     try {
       const res = await fetch("/api/register", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ full_name, email, password, recaptchaToken })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ full_name, email, password })
       });
-      const j = await res.json();
-      if (!res.ok) return alert(j.error || 'Register failed');
-      alert('Registered successfully. Redirecting to sign-in.');
-      window.location.href = '/sign-in.html';
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        showAlert("✅ Registered successfully! Redirecting...", "success");
+        setTimeout(() => (window.location.href = "/sign-in.html"), 2000);
+      } else if (data.error?.includes("already")) {
+        showAlert("⚠️ User already registered.", "error");
+      } else {
+        showAlert(data.error || "❌ Registration failed.", "error");
+      }
     } catch (err) {
       console.error(err);
-      alert('Server error');
+      showAlert("Server error. Please try again later.", "error");
     }
   });
 });
+
+function showAlert(message, type = "error") {
+  const old = document.querySelector(".alert-message");
+  if (old) old.remove();
+
+  const alert = document.createElement("div");
+  alert.className = "alert-message";
+  alert.style.backgroundColor = type === "success" ? "#22c55e" : "#ef4444";
+  alert.textContent = message;
+
+  document.querySelector(".auth-card").appendChild(alert);
+  setTimeout(() => alert.remove(), 4000);
+}

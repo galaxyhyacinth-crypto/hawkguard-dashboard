@@ -1,35 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('signin-form');
-  const toggle = document.getElementById('toggle-signin-password');
+document.addEventListener("DOMContentLoaded", () => {
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+  const form = document.getElementById("signInForm");
 
-  const BASE_URL = ""; // ✅ empty string → relative path (auto uses same origin)
+  togglePassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+    } else {
+      passwordInput.type = "password";
+    }
+  });
 
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      const pwd = document.getElementById('signin-password');
-      if (pwd) pwd.type = pwd.type === 'password' ? 'text' : 'password';
-    });
-  }
-
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById('signin-email').value.trim();
-    const password = document.getElementById('signin-password').value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = passwordInput.value;
+
     try {
-      const res = await fetch("/api/signin", {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ email, password })
+      const res = await fetch("/api/sign-in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
-      const j = await res.json();
-      if (!res.ok) return alert(j.error || 'Sign in failed');
-      // store email to session for OTP verification
-      sessionStorage.setItem('hawkguard_signin_email', email);
-      alert('OTP sent to email. Redirecting to verify page.');
-      window.location.href = '/verify-otp.html';
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        alert("Signed in successfully!");
+        window.location.href = "/dashboard.html";
+      } else {
+        alert(data.error || "Sign in failed.");
+      }
     } catch (err) {
       console.error(err);
-      alert('Server error');
+      alert("Server error. Please try again later.");
     }
+  });
+
+  // Forgot password
+  document.getElementById("forgotPasswordLink").addEventListener("click", () => {
+    const email = prompt("Enter your email to reset password:");
+    if (!email) return;
+    fetch("/api/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    }).then(res => res.json())
+      .then(data => alert(data.message || "Check your email for reset link."))
+      .catch(err => alert("Server error."));
   });
 });

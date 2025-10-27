@@ -1,40 +1,35 @@
-import express from "express";
-import nodemailer from "nodemailer";
-const router = express.Router();
+import { supabaseServer } from "../lib/supabaseServer.js";
 
-router.post("/forgot-password", async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
   const { email } = req.body;
-  // semak email ada di database
-  const userExists = true; // ganti dengan query sebenar
-  if (!userExists) return res.status(400).json({ error: "Email not registered" });
-
-  const resetToken = Math.random().toString(36).substring(2, 12); // token ringkas
-  // simpan token ni ke database utk verify
-
-  // setup nodemailer
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "yourgmail@gmail.com",
-      pass: "yourgmailpassword", // atau app password
-    },
-  });
-
-  const mailOptions = {
-    from: '"HawkGuard" <yourgmail@gmail.com>',
-    to: email,
-    subject: "Reset Your HawkGuard Password",
-    html: `<p>Click the link to reset your password:</p>
-           <a href="https://yourdomain.com/reset-password.html?token=${resetToken}">Reset Password</a>`,
-  };
 
   try {
-    await transporter.sendMail(mailOptions);
-    res.json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to send email" });
-  }
-});
+    // Check if user exists
+    const { data: user, error: userError } = await supabaseServer
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
 
-export default router;
+    if (userError) return res.status(404).json({ error: 'User not found' });
+
+    // Generate OTP
+    const otp = Math.floor(100000 + Math.random() * 900000); // 6 digits
+
+    // Store OTP in otp_store table
+    const { error: otpError } = await supabaseServer
+      .from('otp_store')
+      .upsert({ email, otp, created_at: new Date().toISOString() });
+
+    if (otpError) throw otpError;
+
+    // TODO: Send OTP via email (e.g., nodemailer)
+
+    res.status(200).json({ message: 'OTP sent successfully', otp }); // for dev, remove otp in prod
+  } catch (err) {
+    console.error('❌ Forgot password error:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+}

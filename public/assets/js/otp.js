@@ -1,85 +1,97 @@
-// verify-otp.js
-document.addEventListener('DOMContentLoaded', () => {
-  const inputs = Array.from(document.querySelectorAll('.otp'));
-  const btn = document.getElementById('verify-otp-btn');
-  const msg = document.getElementById('otp-msg');
-  const countdownEl = document.getElementById('countdown');
+// ✅ otp.js — Final version (auto focus + redirect + timer)
+document.addEventListener("DOMContentLoaded", () => {
+  const inputs = Array.from(document.querySelectorAll(".otp-input"));
+  const verifyBtn = document.querySelector(".otp-submit");
+  const errorMsg = document.querySelector(".otp-error");
+  const countdownEl = document.getElementById("countdown");
 
-  // Auto-focus / numeric-only handling
-  inputs.forEach((input, idx) => {
-    input.addEventListener('input', (e) => {
-      const val = e.target.value.replace(/\D/g, ''); // numeric only
-      e.target.value = val;
-      if (val && idx < inputs.length - 1) inputs[idx + 1].focus();
-    });
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !e.target.value && idx > 0) {
-        inputs[idx - 1].focus();
+  // 🧠 Auto move ke next box (taip 1 digit)
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", (e) => {
+      const value = e.target.value.replace(/\D/g, ""); // hanya digit
+      e.target.value = value;
+
+      // delay sikit untuk elak event conflict
+      if (value && index < inputs.length - 1) {
+        setTimeout(() => inputs[index + 1].focus(), 50);
       }
     });
-    // prevent paste of non-digits and allow paste of full 6-digit
-    input.addEventListener('paste', (e) => {
+
+    // Backspace ke box sebelum
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+
+    // Paste terus 6 digit
+    input.addEventListener("paste", (e) => {
       e.preventDefault();
-      const paste = (e.clipboardData || window.clipboardData).getData('text');
-      const digits = paste.replace(/\D/g, '').slice(0,6);
+      const paste = (e.clipboardData || window.clipboardData).getData("text");
+      const digits = paste.replace(/\D/g, "").slice(0, 6);
       if (digits.length === 6) {
-        inputs.forEach((el, i) => el.value = digits[i]);
+        inputs.forEach((el, i) => (el.value = digits[i]));
+        inputs[5].focus();
       }
     });
   });
 
-  // Countdown timer
-  const expirySeconds = Number(sessionStorage.getItem('hawkguard_otp_expiry_seconds')) || Number((Math.floor((Number(${process.env.OTP_EXPIRY_SECONDS || 180})))) || 180);
-  // If server didn't set a stored expiry, default to 180s (3 min)
-  let remaining = Number(sessionStorage.getItem('hawkguard_otp_remaining')) || (Number(process.env?.OTP_EXPIRY_SECONDS) || 180);
-
-  // start a 180-second timer always - show mm:ss
-  // We'll compute from now: if server stores per-email expiry, for now we run client-side 180s
-  remaining = 180;
+  // 🕒 Countdown (3 minit)
+  let remaining = 180;
   function updateCountdown() {
-    const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
-    const ss = String(remaining % 60).padStart(2, '0');
+    const mm = String(Math.floor(remaining / 60)).padStart(2, "0");
+    const ss = String(remaining % 60).padStart(2, "0");
     countdownEl.textContent = `${mm}:${ss}`;
     if (remaining <= 0) {
-      clearInterval(timerInterval);
-      msg.textContent = 'OTP expired. Please sign in again.';
-      msg.style.color = 'red';
+      clearInterval(timer);
+      errorMsg.textContent = "❌ OTP expired. Please sign in again.";
+      errorMsg.style.display = "block";
+      verifyBtn.disabled = true;
     }
     remaining--;
   }
+  const timer = setInterval(updateCountdown, 1000);
   updateCountdown();
-  const timerInterval = setInterval(updateCountdown, 1000);
 
-  btn.addEventListener('click', async () => {
-    const otp = inputs.map(i => i.value).join('');
-    if (otp.length !== 6) return alert('Enter 6-digit OTP');
-    const email = sessionStorage.getItem('hawkguard_signin_email');
+  // 📨 Verify OTP
+  verifyBtn.addEventListener("click", async () => {
+    const otp = inputs.map((i) => i.value).join("");
+    const email = sessionStorage.getItem("hawkguard_signin_email");
+
     if (!email) {
-      alert('Missing email. Please sign in again.');
-      window.location.href = '/sign-in.html';
+      alert("Missing email. Please sign in again.");
+      window.location.href = "/signin";
+      return;
+    }
+
+    if (otp.length !== 6) {
+      errorMsg.textContent = "⚠️ Please enter all 6 digits";
+      errorMsg.style.display = "block";
       return;
     }
 
     try {
-      const res = await fetch('/api/verify-otp', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ email, otp })
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
       });
-      const j = await res.json();
-      if (!res.ok) {
-        msg.textContent = j.error || 'Verification failed';
-        msg.style.color = 'red';
-        return;
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // ✅ OTP sah → simpan status & redirect
+        localStorage.setItem("hawkguard_verified", "true");
+        errorMsg.style.display = "none";
+        window.location.href = "/dashboard.html";
+      } else {
+        errorMsg.textContent = data.error || "❌ Invalid or expired OTP";
+        errorMsg.style.display = "block";
       }
-      // store token & name (if any) and redirect
-      // token handling is rudimentary; you can extend to JWT or supabase sessions
-      localStorage.setItem('hawkguard_token', j.token || '');
-      localStorage.setItem('hawkguard_fullname', j.full_name || '');
-      window.location.href = '/dashboard.html';
     } catch (err) {
-      console.error(err);
-      alert('Server error');
+      console.error("❌ Error verifying OTP:", err);
+      errorMsg.textContent = "⚠️ Server error, please try again.";
+      errorMsg.style.display = "block";
     }
   });
 });

@@ -1,4 +1,4 @@
-import { supabase } from "./supabase.js";
+import { supabaseServer } from "../lib/supabaseServer.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     console.log("🔹 Signin attempt:", email);
 
     // ✅ Fetch user
-    const { data: users, error: fetchError } = await supabase
+    const { data: users, error: fetchError } = await supabaseServer
       .from("users")
       .select("*")
       .eq("email", email)
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString();
 
     // ✅ Store OTP in Supabase
-    const { error: otpError } = await supabase
+    const { error: otpError } = await supabaseServer
       .from("otp_store")
       .upsert([{ email, otp, expires_at: expiresAt }], { onConflict: "email" });
 

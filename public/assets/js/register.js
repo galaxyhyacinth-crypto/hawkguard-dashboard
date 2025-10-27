@@ -1,5 +1,3 @@
-// /public/assets/js/register.js
-
 const form = document.getElementById("registerForm");
 
 if (form) {

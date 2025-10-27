@@ -1,63 +1,44 @@
-// /api/register.js
-import { supabase } from "./supabase.js";
+import { supabaseServer } from "../lib/supabaseServer.js";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
 
+  const { full_name, email, password } = req.body;
+
+  if (!full_name || !email || !password)
+    return res.status(400).json({ error: "All fields are required" });
+
   try {
-    const { full_name, email, password } = req.body || {};
-
-    if (!full_name || !email || !password)
-      return res.status(400).json({ error: "All fields are required" });
-
-    console.log("🟢 Register request received:", { full_name, email });
-
-    // ✅ Check environment
-    console.log("🔍 ENV CHECK:", {
-      SUPABASE_URL: process.env.SUPABASE_URL,
-      KEY_STATUS: process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ Loaded" : "❌ Missing",
-    });
-
-    // ✅ Check if email already exists
-    const { data: existingUser, error: selectError } = await supabase
+    // Check if user already exists
+    const { data: existingUser, error: fetchError } = await supabaseServer
       .from("users")
-      .select("email")
+      .select("id")
       .eq("email", email)
-      .maybeSingle();
+      .single();
 
-    if (selectError) {
-      console.error("❌ Supabase SELECT error:", selectError);
-      throw selectError;
+    if (fetchError && fetchError.code !== "PGRST116") throw fetchError; // ignore "no rows"
+
+    if (existingUser) {
+      return res.status(409).json({ error: "User already registered" });
     }
 
-    if (existingUser)
-      return res.status(400).json({ error: "User already registered" });
-
-    // ✅ Hash password
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ Insert new user
-    const { error: insertError } = await supabase.from("users").insert([
-      {
-        full_name,
-        email,
-        password: hashedPassword,
-        created_at: new Date(),
-      },
-    ]);
+    // Insert user
+    const { data, error } = await supabaseServer
+      .from("users")
+      .insert([{ full_name, email, password: hashedPassword }]);
 
-    if (insertError) {
-      console.error("❌ Supabase INSERT error:", insertError);
-      throw insertError;
-    }
+    if (error) throw error;
 
-    console.log("✅ User registered successfully:", email);
-    return res.status(200).json({ ok: true, message: "Registered successfully" });
+    console.log("User registered:", data);
+
+    res.status(200).json({ ok: true, message: "User registered successfully" });
   } catch (err) {
-    console.error("🔥 Server error:", err);
-    // ✅ Force JSON response so frontend won’t break
-    return res.status(500).json({ error: "Server failed to process request" });
+    console.error("❌ Register error:", err.message || err);
+    res.status(500).json({ error: "Server error registering user" });
   }
 }

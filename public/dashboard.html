@@ -1,40 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Dashboard — HawkGuard</title>
-  <link rel="stylesheet" href="/assets/css/style.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HawkGuard Dashboard</title>
+<link rel="stylesheet" href="/assets/css/dashboard.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="dashboard-page sign-bg">
-  <div class="dashboard">
-    <header class="dashboard-header">
-      <h1>HawkGuard Dashboard</h1>
-      <div class="user-controls">
-        <span id="user-fullname"></span>
-        <button id="logout-btn" class="btn small">Log out</button>
-      </div>
-    </header>
+<body>
+<div class="dashboard-wrapper">
 
-    <main>
-      <section class="summary">
-        <div class="card white-box">
-          <h3>Registered</h3>
-          <div class="count" id="registered-count">0</div>
-          <div id="registered-feed" class="feed"></div>
-        </div>
-        <div class="card white-box">
-          <h3>Unregistered</h3>
-          <div class="count" id="unregistered-count">0</div>
-          <div id="unregistered-feed" class="feed"></div>
-        </div>
-      </section>
-    </main>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <input type="text" id="searchVehicle" placeholder="Search Plate/Owner">
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+  </header>
+
+  <!-- Stat Cards -->
+  <div class="stat-cards">
+    <div class="card"><h3>Total Vehicles</h3><p id="totalVehicles">0</p></div>
+    <div class="card"><h3>Registered</h3><p id="registeredVehicles">0</p></div>
+    <div class="card"><h3>Unregistered</h3><p id="unregisteredVehicles">0</p></div>
+    <div class="card"><h3>System Status</h3><p id="systemStatus">Active</p></div>
   </div>
 
-  <!-- supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
-  <script src="/assets/js/supabase-client.js"></script>
-  <script src="/assets/js/dashboard.js"></script>
+  <!-- Main -->
+  <div class="main-content">
+
+    <!-- Camera feeds -->
+    <div class="camera-section">
+      <div class="camera-card">
+        <h4>Camera 1</h4>
+        <img id="cam1" src="http://RASPBERRY_IP:PORT/cam1" alt="Camera 1" class="camera-feed">
+        <table id="cam1Table">
+          <thead><tr><th>Time</th><th>Plate</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="camera-card">
+        <h4>Camera 2</h4>
+        <img id="cam2" src="http://RASPBERRY_IP:PORT/cam2" alt="Camera 2" class="camera-feed">
+        <table id="cam2Table">
+          <thead><tr><th>Time</th><th>Plate</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Detected Vehicle Panel -->
+    <div class="detected-panel">
+      <h4>Latest Detected Vehicle</h4>
+      <p>Plate: <span id="latestPlate">-</span></p>
+      <p>Owner: <span id="latestOwner">-</span></p>
+      <p>Vehicle Type: <span id="latestType">-</span></p>
+      <p>Status: <span id="latestStatus">-</span></p>
+      <div id="alertBox" class="alert-box">UNREGISTERED!</div>
+      <button>Trigger Alarm</button>
+      <button>View History</button>
+      <button>Block Gate</button>
+    </div>
+
+  </div>
+
+  <!-- Detection Statistics Chart -->
+  <canvas id="detectionChart"></canvas>
+
+</div>
+
+<script src="/assets/js/dashboard.js"></script>
 </body>
 </html>

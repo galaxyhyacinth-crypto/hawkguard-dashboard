@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const { data, error } = await supabaseServer
       .from("VEHICLES")
       .select("*")
-      .order("id", { ascending: false })
+      .order("Plate_Number", { ascending: false }) // guna Plate_Number instead of id
       .limit(20);
 
     if (error) throw error;

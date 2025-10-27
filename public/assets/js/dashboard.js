@@ -1,3 +1,6 @@
+// =====================
+// Dashboard JS
+// =====================
 const cam1Table = document.querySelector('#cam1Table tbody');
 const cam2Table = document.querySelector('#cam2Table tbody');
 const latestPlate = document.getElementById('latestPlate');
@@ -21,6 +24,9 @@ const detectionChart = new Chart(ctx, {
   options: { responsive:true, scales:{ y:{ beginAtZero:true } } }
 });
 
+// =====================
+// Fetch Vehicles Function
+// =====================
 async function fetchVehicles() {
   try {
     const res = await fetch('/api/fetch-vehicles');
@@ -62,3 +68,36 @@ async function fetchVehicles() {
 // Auto-refresh setiap 5 detik
 fetchVehicles();
 setInterval(fetchVehicles, 5000);
+
+// =====================
+// Tambah Log Out Button
+// =====================
+const logoutBtn = document.createElement("button");
+logoutBtn.textContent = "Log Out";
+logoutBtn.id = "logoutBtn";
+logoutBtn.className = "logout-button";
+
+// Letakkan button di header (kanan input search & dark mode toggle)
+const header = document.querySelector(".dashboard-header");
+header.appendChild(logoutBtn);
+
+// Style button (boleh pindah ke CSS jika mahu)
+logoutBtn.style.marginLeft = "10px";
+logoutBtn.style.padding = "5px 12px";
+logoutBtn.style.backgroundColor = "#e53e3e";
+logoutBtn.style.color = "white";
+logoutBtn.style.border = "none";
+logoutBtn.style.borderRadius = "5px";
+logoutBtn.style.cursor = "pointer";
+logoutBtn.style.fontWeight = "bold";
+
+// Hover effect
+logoutBtn.addEventListener("mouseover", () => { logoutBtn.style.backgroundColor = "#c53030"; });
+logoutBtn.addEventListener("mouseout", () => { logoutBtn.style.backgroundColor = "#e53e3e"; });
+
+// Event click untuk log out
+logoutBtn.addEventListener("click", () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = "/";
+});

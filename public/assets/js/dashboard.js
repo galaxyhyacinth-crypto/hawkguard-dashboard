@@ -137,5 +137,5 @@ logoutBtn.addEventListener("click", () => {
 // =====================
 const streamEl = document.getElementById('cameraStream');
 if(streamEl){
-  streamEl.src = 'http://RASPBERRY_PI_IP:8080/stream.mjpg'; // ganti IP & port
+  streamEl.src = 'http://10.170.171.242:8080/stream.mjpg'; // ganti IP & port
 }

@@ -1,55 +1,63 @@
-import { supabaseServer } from "../lib/supabaseServer.js";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 export default async function handler(req, res) {
   try {
-    // Registered vehicles
-    const { data: regData, error: regError } = await supabaseServer
+    // Ambil data dari ENTRIES
+    const { data: entriesData, error: entriesError } = await supabase
       .from("ENTRIES")
-      .select(`Plate_Number, Entry_Date, Exit_Date, Camera, Vehicle_Type, Name`)
-      .order("Entry_Date", { ascending: false })
-      .limit(20);
+      .select("Id, Plate_Number, Entry_Date, Exit_Date, Camera");
 
-    if (regError) throw regError;
+    if (entriesError) throw entriesError;
 
-    // Map registered to standard format
-    const registered = regData.map(v => ({
-      Plate_Number: v.Plate_Number,
-      Time_Detected: v.Exit_Date || v.Entry_Date,
-      Camera: v.Camera || "CAM1",
-      Status: "REGISTERED",
-      Vehicle_Type: v.Vehicle_Type || null,
-      Name: v.Name || null,
-      Image_Url: null // registered tak ada image
-    }));
-
-    // Unregistered vehicles
-    const { data: unregData, error: unregError } = await supabaseServer
+    // Ambil data dari UNREGISTERED LOGS
+    const { data: unregData, error: unregError } = await supabase
       .from("UNREGISTERED LOGS")
-      .select("*")
-      .order("Time_Detected", { ascending: false })
-      .limit(20);
+      .select("Plate_Number, Time_Detected, Image_Url, Camera");
 
     if (unregError) throw unregError;
 
-    const unregistered = unregData.map(v => ({
-      Plate_Number: v.Plate_Number,
-      Time_Detected: v.Time_Detected,
-      Camera: v.Camera || "CAM1", // pastikan ada Camera field
-      Status: "UNREGISTERED",
-      Vehicle_Type: null,
-      Name: null,
-      Image_Url: v.Image_Url
-    }));
+    // Ambil data VEHICLES (untuk dapatkan Vehicle_Type, Name, Status)
+    const { data: vehicleData, error: vehicleError } = await supabase
+      .from("VEHICLES")
+      .select("Plate_Number, Name, Vehicle_Type, Status");
 
-    // Gabung dan sort by latest
-    const allVehicles = [...registered, ...unregistered].sort(
-      (a,b) => new Date(b.Time_Detected) - new Date(a.Time_Detected)
-    );
+    if (vehicleError) throw vehicleError;
 
-    res.status(200).json(allVehicles);
+    // Gabungkan semua data berdasarkan Plate_Number
+    const allData = [
+      ...entriesData.map((e) => {
+        const v = vehicleData.find((x) => x.Plate_Number === e.Plate_Number);
+        return {
+          Source: "ENTRY",
+          Plate_Number: e.Plate_Number,
+          Name: v?.Name || "-",
+          Vehicle_Type: v?.Vehicle_Type || "-",
+          Status: v?.Status || "REGISTERED",
+          Camera: e.Camera || "-",
+          Time_Detected: e.Entry_Date || "-",
+          Image_Url: "-",
+        };
+      }),
+      ...unregData.map((u) => ({
+        Source: "UNREGISTERED",
+        Plate_Number: u.Plate_Number,
+        Name: "-",
+        Vehicle_Type: "-",
+        Status: "UNREGISTERED",
+        Camera: u.Camera || "-",
+        Time_Detected: u.Time_Detected,
+        Image_Url: u.Image_Url || "-",
+      })),
+    ];
 
-  } catch(err) {
+    res.status(200).json({ success: true, data: allData });
+  } catch (err) {
     console.error("Fetch all vehicles error:", err.message);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ success: false, error: err.message });
   }
 }

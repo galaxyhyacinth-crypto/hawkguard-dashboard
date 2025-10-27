@@ -1,141 +1,90 @@
-// =====================
-// Dashboard JS Live + Camera + Unregistered
-// =====================
+// -------------------------
+// NGROK + Fallback IP
+// -------------------------
+const NGROK_URL = "https://flatfooted-interventral-jillian.ngrok-free.app"; // Masukkan URL NGROK dari Supabase atau config
+const CAM1_FALLBACK = "http://10.170.171.242:5000/cam1";
+const CAM2_FALLBACK = "http://10.170.171.242:5000/cam2";
 
-const cam1Table = document.querySelector('#cam1Table tbody');
-const cam2Table = document.querySelector('#cam2Table tbody');
-const unregTable = document.querySelector('#unregTable tbody');
-const latestPlate = document.getElementById('latestPlate');
-const latestOwner = document.getElementById('latestOwner');
-const latestType = document.getElementById('latestType');
-const latestStatus = document.getElementById('latestStatus');
-const alertBox = document.getElementById('alertBox');
+const cam1Element = document.getElementById("cam1");
+const cam2Element = document.getElementById("cam2");
 
-const totalVehiclesEl = document.getElementById('totalVehicles');
-const registeredVehiclesEl = document.getElementById('registeredVehicles');
-const unregisteredVehiclesEl = document.getElementById('unregisteredVehicles');
+// Coba NGROK, jika tak dapat load, fallback ke IP lokal
+function updateCameraSrc() {
+  fetch(`${NGROK_URL}/cam1`, { method: "HEAD" })
+    .then(() => { cam1Element.src = `${NGROK_URL}/cam1`; })
+    .catch(() => { cam1Element.src = CAM1_FALLBACK; });
 
-// =====================
-// Chart Setup
-// =====================
-const ctx = document.getElementById('detectionChart').getContext('2d');
-const detectionChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-    datasets: [{ label:'Detections', data:[0,0,0,0,0,0,0], backgroundColor:'#1e90ff'}]
-  },
-  options: { responsive:true, scales:{ y:{ beginAtZero:true } } }
-});
+  fetch(`${NGROK_URL}/cam2`, { method: "HEAD" })
+    .then(() => { cam2Element.src = `${NGROK_URL}/cam2`; })
+    .catch(() => { cam2Element.src = CAM2_FALLBACK; });
+}
 
-// =====================
-// Fetch All Vehicles
-// =====================
-async function fetchAllVehicles() {
+// Update src setiap 10 saat untuk handle NGROK restart
+setInterval(updateCameraSrc, 10000);
+updateCameraSrc();
+
+// -------------------------
+// Fetch Vehicles Data
+// -------------------------
+async function fetchVehicles() {
   try {
-    const res = await fetch('/api/fetch-all-vehicles');
-    const data = await res.json();
+    const res = await fetch("/api/fetch-all-vehicles");
+    const result = await res.json();
 
-    // Stats
-    const total = data.length;
-    const registered = data.filter(v => v.Status.trim() === 'REGISTERED').length;
-    const unregistered = total - registered;
+    if (!result.success) throw new Error(result.error);
 
-    totalVehiclesEl.textContent = total;
-    registeredVehiclesEl.textContent = registered;
-    unregisteredVehiclesEl.textContent = unregistered;
+    const data = result.data;
 
-    // Clear tables
-    cam1Table.innerHTML = '';
-    cam2Table.innerHTML = '';
-    unregTable.innerHTML = '';
+    // Reset semua table
+    document.querySelector("#cam1Table tbody").innerHTML = "";
+    document.querySelector("#cam2Table tbody").innerHTML = "";
 
-    // Latest 5 per camera
-    const cam1Data = data.filter(v => v.Camera === 'CAM1').slice(0,5);
-    const cam2Data = data.filter(v => v.Camera === 'CAM2').slice(0,5);
-    const unregData = data.filter(v => v.Status.trim() !== 'REGISTERED').slice(0,5);
+    // Kira jumlah
+    document.getElementById("totalVehicles").textContent = data.length;
+    document.getElementById("registeredVehicles").textContent =
+      data.filter((x) => x.Status === "REGISTERED").length;
+    document.getElementById("unregisteredVehicles").textContent =
+      data.filter((x) => x.Status === "UNREGISTERED").length;
 
-    cam1Data.forEach(v => {
+    // Isi data setiap kamera
+    data.forEach((v) => {
       const row = `<tr>
-        <td>${new Date(v.Time_Detected).toLocaleTimeString()}</td>
+        <td>${v.Time_Detected}</td>
         <td>${v.Plate_Number}</td>
-        <td>${v.Name || '-'}</td>
+        <td>${v.Name}</td>
         <td>${v.Status}</td>
       </tr>`;
-      cam1Table.innerHTML += row;
+
+      if (v.Camera === "CAM1") {
+        document.querySelector("#cam1Table tbody").insertAdjacentHTML("beforeend", row);
+        document.getElementById("cam1Plate").textContent = v.Plate_Number;
+      } else if (v.Camera === "CAM2") {
+        document.querySelector("#cam2Table tbody").insertAdjacentHTML("beforeend", row);
+        document.getElementById("cam2Plate").textContent = v.Plate_Number;
+      }
+
+      // Update Latest Detected
+      document.getElementById("latestPlate").textContent = v.Plate_Number;
+      document.getElementById("latestOwner").textContent = v.Name;
+      document.getElementById("latestType").textContent = v.Vehicle_Type;
+      document.getElementById("latestStatus").textContent = v.Status;
+
+      // Jika unregistered, paparkan alert
+      if (v.Status === "UNREGISTERED") {
+        document.getElementById("alertBox").style.display = "block";
+        if (v.Camera === "CAM1") document.getElementById("cam1Alert").style.display = "block";
+        if (v.Camera === "CAM2") document.getElementById("cam2Alert").style.display = "block";
+      } else {
+        document.getElementById("alertBox").style.display = "none";
+        document.getElementById("cam1Alert").style.display = "none";
+        document.getElementById("cam2Alert").style.display = "none";
+      }
     });
-
-    cam2Data.forEach(v => {
-      const row = `<tr>
-        <td>${new Date(v.Time_Detected).toLocaleTimeString()}</td>
-        <td>${v.Plate_Number}</td>
-        <td>${v.Name || '-'}</td>
-        <td>${v.Status}</td>
-      </tr>`;
-      cam2Table.innerHTML += row;
-    });
-
-    unregData.forEach(v => {
-      const row = `<tr>
-        <td>${new Date(v.Time_Detected).toLocaleTimeString()}</td>
-        <td>${v.Plate_Number}</td>
-        <td>${v.Vehicle_Type || '-'}</td>
-        <td><img src="${v.Image_Url}" alt="${v.Plate_Number}" style="width:80px;height:auto;"/></td>
-      </tr>`;
-      unregTable.innerHTML += row;
-    });
-
-    // Latest detected vehicle
-    if(data.length){
-      const latest = data[0];
-      latestPlate.textContent = latest.Plate_Number;
-      latestOwner.textContent = latest.Name || '-';
-      latestType.textContent = latest.Vehicle_Type || '-';
-      latestStatus.textContent = latest.Status;
-      alertBox.style.display = latest.Status.trim() !== 'REGISTERED' ? 'block' : 'none';
-    }
-
-    // TODO: Update chart if needed
-
-  } catch(err) {
-    console.error("Fetch vehicles error:", err);
+  } catch (err) {
+    console.error("Dashboard fetch error:", err);
   }
 }
 
-// Auto-refresh setiap 5 detik
-fetchAllVehicles();
-setInterval(fetchAllVehicles, 5000);
-
-// =====================
-// Log Out Button
-// =====================
-const logoutBtn = document.createElement("button");
-logoutBtn.textContent = "Log Out";
-logoutBtn.id = "logoutBtn";
-logoutBtn.className = "logout-button";
-const header = document.querySelector(".dashboard-header");
-header.appendChild(logoutBtn);
-
-logoutBtn.style.marginLeft = "10px";
-logoutBtn.style.padding = "5px 12px";
-logoutBtn.style.backgroundColor = "#e53e3e";
-logoutBtn.style.color = "white";
-logoutBtn.style.border = "none";
-logoutBtn.style.borderRadius = "5px";
-logoutBtn.style.cursor = "pointer";
-logoutBtn.style.fontWeight = "bold";
-logoutBtn.addEventListener("mouseover", () => logoutBtn.style.backgroundColor = "#c53030");
-logoutBtn.addEventListener("mouseout", () => logoutBtn.style.backgroundColor = "#e53e3e");
-logoutBtn.addEventListener("click", () => {
-  localStorage.clear();
-  sessionStorage.clear();
-  window.location.href = "/";
-});
-
-// =====================
-// Optional: MJPEG stream embed
-// =====================
-const streamEl = document.getElementById('cameraStream');
-if(streamEl){
-  streamEl.src = 'http://10.170.171.242:8080/stream.mjpg'; // ganti IP & port
-}
+// Auto refresh setiap 3 saat
+setInterval(fetchVehicles, 3000);
+fetchVehicles();

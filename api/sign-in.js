@@ -1,4 +1,4 @@
-import { supabase } from "./_supabase.js";
+import { supabase } from "./supabase.js";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
     }
 
     // ✅ Return success JSON (no email sending yet)
-    return res.status(200).json({ message: "OTP sent", otp });
+   return res.status(200).json({ otpRequired: true, message: "OTP sent" });
 
   } catch (err) {
     console.error("Server error:", err);

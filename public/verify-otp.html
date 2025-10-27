@@ -1,33 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Verify OTP — HawkGuard</title>
-<link rel="stylesheet" href="assets/css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Verify OTP — HawkGuard</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body.auth-page {
+      background: url("assets/images/bg-sign.jpg") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .auth-card {
+      background: rgba(255,255,255,0.95);
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    .auth-card h2 {
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: #000;
+    }
+
+    .otp-inputs input {
+      width: 40px;
+      height: 50px;
+      font-size: 24px;
+      text-align: center;
+      margin: 0 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    .otp-inputs input:focus {
+      border-color: #00b4ff;
+    }
+
+    .btn.auth-btn {
+      background-color: #00b4ff;
+      color: white;
+      border: none;
+      padding: 10px 0;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn.auth-btn:hover { background-color: #0098e0; }
+
+    .alert-message {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: #000;
+      background-color: #fff;
+      border:1px solid #ddd;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 9999;
+    }
+  </style>
 </head>
+
 <body class="auth-page">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <img src="assets/images/hawk-logo.png" alt="HawkGuard Logo" style="width:80px; margin-bottom:15px;">
+      <h2>VERIFY OTP</h2>
 
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <h2>Enter OTP</h2>
-    <p>Enter the 6-digit code sent to your email.</p>
-
-    <div id="otp-inputs" class="otp-inputs">
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
-      <input maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp"/>
+      <form id="verifyOtpForm">
+        <div class="otp-inputs">
+          <input type="text" maxlength="1" id="otp1" required>
+          <input type="text" maxlength="1" id="otp2" required>
+          <input type="text" maxlength="1" id="otp3" required>
+          <input type="text" maxlength="1" id="otp4" required>
+          <input type="text" maxlength="1" id="otp5" required>
+          <input type="text" maxlength="1" id="otp6" required>
+        </div>
+        <button type="submit" class="btn auth-btn">Verify OTP</button>
+      </form>
     </div>
-
-    <button id="verify-otp-btn" class="btn auth-btn">Verify OTP</button>
-    <p id="otp-msg" class="muted"></p>
-    <p class="muted"><a href="sign-in.html">Back to sign in</a></p>
   </div>
-</div>
 
-<script src="assets/js/verify-otp.js"></script>
+  <script src="assets/js/verify-otp.js"></script>
 </body>
 </html>

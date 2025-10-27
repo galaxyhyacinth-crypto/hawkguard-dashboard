@@ -1,4 +1,4 @@
-import { supabase } from "./_supabase.js";
+import { supabase } from "./supabase.js";
 
 export async function sendOtpAndStore(email) {
   // Generate 6-digit OTP

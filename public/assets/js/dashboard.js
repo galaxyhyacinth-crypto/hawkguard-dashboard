@@ -1,9 +1,9 @@
 // -------------------------
 // NGROK + Fallback IP
 // -------------------------
-const NGROK_URL = "https://flatfooted-interventral-jillian.ngrok-free.app"; // Masukkan URL NGROK dari Supabase atau config
-const CAM1_FALLBACK = "http://10.170.171.242:5000/cam1";
-const CAM2_FALLBACK = "http://10.170.171.242:5000/cam2";
+const NGROK_URL = "https://flatfooted-interventral-jillian.ngrok-free.dev"; // Masukkan URL NGROK dari Supabase atau config
+const CAM1_FALLBACK = "http://10.171.170.242:5000/cam1";
+const CAM2_FALLBACK = "http://10.171.170.242:5000/cam2";
 
 const cam1Element = document.getElementById("cam1");
 const cam2Element = document.getElementById("cam2");

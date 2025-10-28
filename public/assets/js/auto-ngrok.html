@@ -1,0 +1,27 @@
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const supabaseUrl = "https://uzlxttvrgqvigmnbklmr.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6bHh0dHZyZ3F2aWdtbmJrbG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3NDYwMTUsImV4cCI6MjA3MDMyMjAxNX0.fk0c43c41jGa3ogCu0kXZjLWmC-pW7yYSn77FwV4vdE"; // anon key
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  async function loadCameras() {
+    const { data, error } = await supabase
+      .from("SETTINGS")
+      .select("Value")
+      .eq("Key", "NGROK_URL")
+      .single();
+      setInterval(loadCameras, 15000);
+
+    if (data) {
+      const baseUrl = data.Value;
+      document.getElementById("cam1").src = `${baseUrl}/cam1`;
+      document.getElementById("cam2").src = `${baseUrl}/cam2`;
+      console.log("Camera URLs updated:", baseUrl);
+    } else {
+      console.error("Failed to fetch NGROK_URL", error);
+    }
+  }
+
+  loadCameras();
+</script>

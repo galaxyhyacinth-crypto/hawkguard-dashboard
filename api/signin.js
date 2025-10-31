@@ -3,42 +3,65 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "Method not allowed" });
-
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ error: "Email and password required" });
-
   try {
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email and password required" });
+    }
+
+    console.log("🔹 Signin attempt:", email);
+
+    // ✅ Fetch user
     const { data: users, error: fetchError } = await supabaseServer
       .from("users")
       .select("*")
       .eq("email", email)
       .limit(1);
 
-    if (fetchError) throw fetchError;
-    if (!users || users.length === 0)
+    if (fetchError) {
+      console.error("❌ Supabase fetch error:", fetchError.message);
+      return res.status(500).json({ error: "Database fetch failed" });
+    }
+
+    if (!users || users.length === 0) {
+      console.log("❌ User not found");
       return res.status(404).json({ error: "User not found" });
+    }
 
     const user = users[0];
+
+    // ✅ Verify password
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ error: "Invalid credentials" });
+    if (!match) {
+      console.log("❌ Wrong password");
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
 
+    // ✅ Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expires_at = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString();
 
+    // ✅ Store OTP in Supabase
     const { error: otpError } = await supabaseServer
       .from("otp_store")
-      .upsert([{ email, otp, expires_at }], { onConflict: "email" });
+      .upsert([{ email, otp, expires_at: expiresAt }], { onConflict: "email" });
 
-    if (otpError) throw otpError;
+    if (otpError) {
+      console.error("❌ OTP store error:", otpError.message);
+      return res.status(500).json({ error: "Failed to save OTP" });
+    }
 
+    // ✅ Send OTP to Gmail
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: true,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_USER, // your Gmail address
+        pass: process.env.SMTP_PASS, // App Password
+      },
     });
 
     await transporter.sendMail({
@@ -48,9 +71,12 @@ export default async function handler(req, res) {
       text: `Your OTP code is: ${otp}. It expires in 5 minutes.`,
     });
 
-    res.status(200).json({ otpRequired: true, message: "OTP sent" });
+    console.log(`✅ OTP sent to email ${email}: ${otp}`);
+
+    // ✅ Return success
+    return res.status(200).json({ otpRequired: true, message: "OTP sent" });
   } catch (err) {
-    console.error("💥 Signin error:", err.message);
-    res.status(500).json({ error: "Server error" });
+    console.error("💥 Server error:", err);
+    return res.status(500).json({ error: "Server error", details: err.message });
   }
 }
